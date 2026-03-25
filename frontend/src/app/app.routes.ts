@@ -9,6 +9,7 @@ import { MyConfigurations } from './components/my-configurations/my-configuratio
 import { Dashboard } from './components/admin/dashboard/dashboard';
 import { Messages } from './components/admin/messages/messages';
 import { Appointments } from './components/admin/appointments/appointments';
+import { authGuard, adminGuard } from './guards/auth-guard';
 
 export const routes: Routes = [
   { path: '', component: Home },
@@ -17,9 +18,9 @@ export const routes: Routes = [
   { path: 'login', component: Login },
   { path: 'register', component: Register },
   { path: 'configurator', component: Configurator },
-  { path: 'my-configurations', component: MyConfigurations },
-  { path: 'admin', component: Dashboard },
-  { path: 'admin/messages', component: Messages },
-  { path: 'admin/appointments', component: Appointments },
+  { path: 'my-configurations', component: MyConfigurations, canActivate: [authGuard] },
+  { path: 'admin', component: Dashboard, canActivate: [adminGuard] },
+  { path: 'admin/messages', component: Messages, canActivate: [adminGuard] },
+  { path: 'admin/appointments', component: Appointments, canActivate: [adminGuard] },
   { path: '**', redirectTo: '' }
 ];
