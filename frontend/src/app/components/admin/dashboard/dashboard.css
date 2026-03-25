@@ -1,0 +1,160 @@
+.admin-page {
+  display: flex;
+  min-height: calc(100vh - 70px);
+}
+
+.admin-sidebar {
+  width: 250px;
+  background: #0a1628;
+  padding: 2rem 1.5rem;
+  display: flex;
+  flex-direction: column;
+  position: sticky;
+  top: 70px;
+  height: calc(100vh - 70px);
+}
+
+.sidebar-brand h2 {
+  color: #ffffff;
+  font-size: 1.2rem;
+  font-weight: 800;
+  margin-bottom: 2rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid #1a2e4a;
+}
+
+.sidebar-nav {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  flex: 1;
+}
+
+.sidebar-nav a {
+  text-decoration: none;
+  color: #a0aec0;
+  padding: 0.7rem 1rem;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  font-weight: 500;
+  transition: all 0.2s;
+}
+
+.sidebar-nav a:hover,
+.sidebar-nav a.active {
+  background: #1a2e4a;
+  color: #00c8ff;
+}
+
+.btn-logout {
+  background: transparent;
+  border: 1px solid #1a2e4a;
+  color: #a0aec0;
+  padding: 0.7rem 1rem;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 0.95rem;
+  transition: all 0.2s;
+  text-align: left;
+}
+
+.btn-logout:hover {
+  border-color: #e53e3e;
+  color: #e53e3e;
+}
+
+.admin-content {
+  flex: 1;
+  padding: 2rem 3rem;
+  background: #f8fafc;
+}
+
+.admin-content h1 {
+  font-size: 2rem;
+  font-weight: 800;
+  color: #0a1628;
+  margin-bottom: 2rem;
+}
+
+.loading {
+  text-align: center;
+  color: #718096;
+  padding: 2rem;
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+  margin-bottom: 3rem;
+}
+
+.stat-card {
+  background: #ffffff;
+  border-radius: 12px;
+  padding: 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+}
+
+.stat-icon {
+  font-size: 2rem;
+}
+
+.stat-info h3 {
+  font-size: 2rem;
+  font-weight: 800;
+  color: #0a1628;
+}
+
+.stat-info p {
+  color: #718096;
+  font-size: 0.9rem;
+}
+
+.quick-links h2 {
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: #0a1628;
+  margin-bottom: 1.5rem;
+}
+
+.links-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.5rem;
+}
+
+.quick-link-card {
+  text-decoration: none;
+  background: #ffffff;
+  border-radius: 12px;
+  padding: 1.5rem;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+  transition: transform 0.2s;
+  display: block;
+}
+
+.quick-link-card:hover {
+  transform: translateY(-3px);
+}
+
+.quick-link-card span {
+  font-size: 2rem;
+  display: block;
+  margin-bottom: 0.5rem;
+}
+
+.quick-link-card h3 {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #0a1628;
+  margin-bottom: 0.3rem;
+}
+
+.quick-link-card p {
+  color: #718096;
+  font-size: 0.9rem;
+}

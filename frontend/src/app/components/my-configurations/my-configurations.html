@@ -1,0 +1,95 @@
+<div class="my-configs-page">
+  <div class="my-configs-header">
+    <h1>Moje konfiguracije</h1>
+    <p>Pregledajte i upoređujte vaše sačuvane konfiguracije</p>
+  </div>
+
+  <div class="my-configs-container">
+    @if (loading) {
+      <div class="loading">Učitavanje...</div>
+    }
+
+    @if (!loading && configurations.length === 0) {
+      <div class="empty-state">
+        <span>🖥️</span>
+        <h3>Nemate sačuvanih konfiguracija</h3>
+        <p>Idite na konfigurator i napravite svoju prvu konfiguraciju!</p>
+        <a routerLink="/configurator" class="btn-primary">Idi na konfigurator</a>
+      </div>
+    }
+
+    @if (compareMode && selectedForCompare.length === 2) {
+      <div class="compare-section">
+        <h2>Poređenje konfiguracija</h2>
+        <div class="compare-grid">
+          @for (config of getCompareConfigs(); track config._id) {
+            <div class="compare-card">
+              <h3>{{ config.name }}</h3>
+              <div class="compare-items">
+                @for (type of componentTypes; track type.key) {
+                  <div class="compare-item">
+                    <span class="compare-label">{{ type.label }}</span>
+                    <span class="compare-value">{{ getComponentName(config, type.key) }}</span>
+                  </div>
+                }
+                <div class="compare-item total">
+                  <span class="compare-label">Ukupno</span>
+                  <span class="compare-value price">{{ config.totalPrice }}€</span>
+                </div>
+              </div>
+            </div>
+          }
+        </div>
+        <button (click)="exitCompare()" class="btn-secondary">Zatvori poređenje</button>
+      </div>
+    }
+
+    @if (configurations.length > 0 && !compareMode) {
+      <div class="configs-toolbar">
+        <button (click)="enterCompareMode()" class="btn-secondary">⚖️ Uporedi konfiguracije</button>
+      </div>
+    }
+
+    @if (compareMode && !( selectedForCompare.length === 2)) {
+      <div class="compare-hint">
+        Odaberite 2 konfiguracije za poređenje ({{ selectedForCompare.length }}/2)
+      </div>
+    }
+
+    <div class="configs-grid">
+      @for (config of configurations; track config._id) {
+        <div class="config-card" [class.selected]="isSelectedForCompare(config._id)">
+          @if (compareMode) {
+            <div class="compare-checkbox" (click)="toggleCompare(config._id)">
+              {{ isSelectedForCompare(config._id) ? '✅' : '⬜' }}
+            </div>
+          }
+          <div class="config-card-header">
+            <h3>{{ config.name }}</h3>
+            <span class="config-price">{{ config.totalPrice }}€</span>
+          </div>
+          <div class="config-components">
+            @for (type of componentTypes; track type.key) {
+              @if (getComponentName(config, type.key) !== '—') {
+                <div class="component-row">
+                  <span class="component-type">{{ type.label }}</span>
+                  <span class="component-name">{{ getComponentName(config, type.key) }}</span>
+                </div>
+              }
+            }
+          </div>
+          @if (config.purpose) {
+            <div class="config-meta">Namena: {{ config.purpose }}</div>
+          }
+          @if (config.games?.length > 0) {
+            <div class="config-meta">Igrice: {{ config.games.join(', ') }}</div>
+          }
+          <div class="config-card-footer">
+            <span class="config-date">{{ config.createdAt | date:'dd.MM.yyyy' }}</span>
+            <button (click)="deleteConfig(config._id)" class="btn-delete">🗑️ Obriši</button>
+          </div>
+        </div>
+      }
+    </div>
+  </div>
+</div>

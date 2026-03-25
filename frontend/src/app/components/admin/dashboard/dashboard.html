@@ -1,0 +1,61 @@
+<div class="admin-page">
+  <div class="admin-sidebar">
+    <div class="sidebar-brand">
+      <h2>KiBox Admin</h2>
+    </div>
+    <nav class="sidebar-nav">
+      <a routerLink="/admin" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">📊 Dashboard</a>
+      <a routerLink="/admin/messages" routerLinkActive="active">✉️ Poruke</a>
+      <a routerLink="/admin/appointments" routerLinkActive="active">📅 Termini</a>
+    </nav>
+    <button (click)="logout()" class="btn-logout">🚪 Odjava</button>
+  </div>
+
+  <div class="admin-content">
+    <h1>Dashboard</h1>
+
+    @if (loading) {
+      <div class="loading">Učitavanje...</div>
+    }
+
+    <div class="stats-grid">
+      <div class="stat-card">
+        <div class="stat-icon">✉️</div>
+        <div class="stat-info">
+          <h3>{{ unreadMessages }}</h3>
+          <p>Nepročitane poruke</p>
+        </div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon">📅</div>
+        <div class="stat-info">
+          <h3>{{ pendingAppointments }}</h3>
+          <p>Termini na čekanju</p>
+        </div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon">🖥️</div>
+        <div class="stat-info">
+          <h3>{{ totalConfigurations }}</h3>
+          <p>Zahtevi za konfiguracije</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="quick-links">
+      <h2>Brzi pristup</h2>
+      <div class="links-grid">
+        <a routerLink="/admin/messages" class="quick-link-card">
+          <span>✉️</span>
+          <h3>Poruke</h3>
+          <p>Pregledajte sve kontakt poruke</p>
+        </a>
+        <a routerLink="/admin/appointments" class="quick-link-card">
+          <span>📅</span>
+          <h3>Termini</h3>
+          <p>Upravljajte zakazanim terminima</p>
+        </a>
+      </div>
+    </div>
+  </div>
+</div>

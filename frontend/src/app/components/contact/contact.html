@@ -1,0 +1,75 @@
+<div class="contact-page">
+  <div class="contact-header">
+    <h1>Kontaktirajte nas</h1>
+    <p>Tu smo za sva vaša pitanja i nedoumice</p>
+  </div>
+
+  <div class="contact-container">
+    <div class="contact-info">
+      <h2>Informacije</h2>
+      <div class="info-item">
+        <span>📍</span>
+        <div>
+          <h4>Adresa</h4>
+          <p>Kragujevac, Srbija</p>
+        </div>
+      </div>
+      <div class="info-item">
+        <span>📞</span>
+        <div>
+          <h4>Telefon</h4>
+          <p>+381 60 123 4567</p>
+        </div>
+      </div>
+      <div class="info-item">
+        <span>✉️</span>
+        <div>
+          <h4>Email</h4>
+          <p>info&#64;kibox.rs</p>
+        </div>
+      </div>
+      <div class="info-item">
+        <span>🕐</span>
+        <div>
+          <h4>Radno vreme</h4>
+          <p>Ponedeljak – Petak: 09:00 – 17:00</p>
+          <p>Subota: 09:00 – 13:00</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="contact-form-wrapper">
+      <h2>Pošaljite poruku</h2>
+
+      @if (successMessage) {
+        <div class="success-msg">{{ successMessage }}</div>
+      }
+
+      @if (errorMessage) {
+        <div class="error-msg">{{ errorMessage }}</div>
+      }
+
+      <form (ngSubmit)="onSubmit()">
+        <div class="form-group">
+          <label>Ime i prezime</label>
+          <input type="text" [(ngModel)]="form.name" name="name" placeholder="Vaše ime" required />
+        </div>
+        <div class="form-group">
+          <label>Email</label>
+          <input type="email" [(ngModel)]="form.email" name="email" placeholder="vas@email.com" required />
+        </div>
+        <div class="form-group">
+          <label>Telefon (opciono)</label>
+          <input type="text" [(ngModel)]="form.phone" name="phone" placeholder="+381 60 ..." />
+        </div>
+        <div class="form-group">
+          <label>Poruka</label>
+          <textarea [(ngModel)]="form.message" name="message" placeholder="Vaša poruka..." rows="5" required></textarea>
+        </div>
+        <button type="submit" class="btn-submit" [disabled]="loading">
+          {{ loading ? 'Slanje...' : 'Pošalji poruku' }}
+        </button>
+      </form>
+    </div>
+  </div>
+</div>

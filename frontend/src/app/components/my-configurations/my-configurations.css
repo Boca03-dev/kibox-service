@@ -1,0 +1,278 @@
+.my-configs-page {
+  min-height: calc(100vh - 70px);
+  background: #f8fafc;
+}
+
+.my-configs-header {
+  background: linear-gradient(135deg, #0a1628 0%, #0d2144 100%);
+  padding: 4rem 2rem;
+  text-align: center;
+}
+
+.my-configs-header h1 {
+  font-size: 2.5rem;
+  font-weight: 800;
+  color: #ffffff;
+  margin-bottom: 0.5rem;
+}
+
+.my-configs-header p {
+  color: #a0aec0;
+  font-size: 1.1rem;
+}
+
+.my-configs-container {
+  max-width: 1100px;
+  margin: 3rem auto;
+  padding: 0 2rem;
+}
+
+.loading {
+  text-align: center;
+  color: #718096;
+  font-size: 1.1rem;
+  padding: 3rem;
+}
+
+.empty-state {
+  text-align: center;
+  padding: 4rem 2rem;
+  background: #ffffff;
+  border-radius: 16px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+}
+
+.empty-state span {
+  font-size: 3rem;
+  display: block;
+  margin-bottom: 1rem;
+}
+
+.empty-state h3 {
+  font-size: 1.4rem;
+  color: #0a1628;
+  margin-bottom: 0.5rem;
+}
+
+.empty-state p {
+  color: #718096;
+  margin-bottom: 1.5rem;
+}
+
+.btn-primary {
+  display: inline-block;
+  padding: 0.7rem 1.5rem;
+  background: #00c8ff;
+  color: #0a1628;
+  border: none;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  font-weight: 700;
+  cursor: pointer;
+  text-decoration: none;
+  transition: background 0.2s;
+}
+
+.btn-primary:hover {
+  background: #00a8d8;
+}
+
+.btn-secondary {
+  padding: 0.7rem 1.5rem;
+  background: transparent;
+  color: #00c8ff;
+  border: 2px solid #00c8ff;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.btn-secondary:hover {
+  background: #00c8ff;
+  color: #0a1628;
+}
+
+.configs-toolbar {
+  margin-bottom: 1.5rem;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.compare-hint {
+  background: #e6faff;
+  color: #0a1628;
+  padding: 0.8rem 1rem;
+  border-radius: 8px;
+  margin-bottom: 1.5rem;
+  font-weight: 600;
+  border: 1px solid #00c8ff;
+}
+
+.configs-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 1.5rem;
+}
+
+.config-card {
+  background: #ffffff;
+  border-radius: 16px;
+  padding: 1.5rem;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+  border: 2px solid transparent;
+  transition: all 0.2s;
+  position: relative;
+}
+
+.config-card.selected {
+  border-color: #00c8ff;
+}
+
+.compare-checkbox {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  font-size: 1.2rem;
+  cursor: pointer;
+}
+
+.config-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+  padding-bottom: 0.8rem;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.config-card-header h3 {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #0a1628;
+}
+
+.config-price {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #00c8ff;
+}
+
+.config-components {
+  margin-bottom: 1rem;
+}
+
+.component-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 0.3rem 0;
+  font-size: 0.85rem;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.component-type {
+  color: #718096;
+  font-weight: 600;
+}
+
+.component-name {
+  color: #0a1628;
+  text-align: right;
+  max-width: 180px;
+}
+
+.config-meta {
+  font-size: 0.8rem;
+  color: #718096;
+  margin-bottom: 0.3rem;
+}
+
+.config-card-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 1rem;
+  padding-top: 0.8rem;
+  border-top: 1px solid #e2e8f0;
+}
+
+.config-date {
+  font-size: 0.8rem;
+  color: #a0aec0;
+}
+
+.btn-delete {
+  background: transparent;
+  border: none;
+  color: #e53e3e;
+  cursor: pointer;
+  font-size: 0.85rem;
+  padding: 0.3rem 0.6rem;
+  border-radius: 6px;
+  transition: background 0.2s;
+}
+
+.btn-delete:hover {
+  background: #fff5f5;
+}
+
+.compare-section {
+  background: #ffffff;
+  border-radius: 16px;
+  padding: 2rem;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+  margin-bottom: 2rem;
+}
+
+.compare-section h2 {
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: #0a1628;
+  margin-bottom: 1.5rem;
+}
+
+.compare-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+  margin-bottom: 1.5rem;
+}
+
+.compare-card h3 {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #0a1628;
+  margin-bottom: 1rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 2px solid #00c8ff;
+}
+
+.compare-item {
+  display: flex;
+  justify-content: space-between;
+  padding: 0.5rem 0;
+  border-bottom: 1px solid #f0f0f0;
+  font-size: 0.9rem;
+}
+
+.compare-label {
+  color: #718096;
+  font-weight: 600;
+}
+
+.compare-value {
+  color: #0a1628;
+  text-align: right;
+  max-width: 180px;
+}
+
+.compare-item.total {
+  margin-top: 0.5rem;
+  font-weight: 700;
+}
+
+.compare-value.price {
+  color: #00c8ff;
+  font-size: 1.1rem;
+}

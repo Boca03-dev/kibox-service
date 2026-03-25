@@ -1,0 +1,63 @@
+<div class="admin-page">
+  <div class="admin-sidebar">
+    <div class="sidebar-brand">
+      <h2>KiBox Admin</h2>
+    </div>
+    <nav class="sidebar-nav">
+      <a routerLink="/admin" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">📊 Dashboard</a>
+      <a routerLink="/admin/messages" routerLinkActive="active">✉️ Poruke</a>
+      <a routerLink="/admin/appointments" routerLinkActive="active">📅 Termini</a>
+    </nav>
+    <button (click)="logout()" class="btn-logout">🚪 Odjava</button>
+  </div>
+
+  <div class="admin-content">
+    <h1>Termini</h1>
+
+    @if (loading) {
+      <div class="loading">Učitavanje...</div>
+    }
+
+    @if (!loading && appointments.length === 0) {
+      <div class="empty-state">
+        <span>📅</span>
+        <h3>Nema zakazanih termina</h3>
+      </div>
+    }
+
+    <div class="appointments-list">
+      @for (appointment of appointments; track appointment._id) {
+        <div class="appointment-card" [class]="'status-' + appointment.status">
+          <div class="appointment-header">
+            <div class="appointment-info">
+              <h3>{{ appointment.name }}</h3>
+              <span>{{ appointment.email }}</span>
+              <span>• {{ appointment.phone }}</span>
+            </div>
+            <div class="appointment-meta">
+              <span class="appointment-date">{{ appointment.date | date:'dd.MM.yyyy HH:mm' }}</span>
+              <span class="badge" [class]="'badge-' + appointment.status">
+                {{ getStatusLabel(appointment.status) }}
+              </span>
+            </div>
+          </div>
+
+          <p class="appointment-description">{{ appointment.description }}</p>
+
+          <div class="appointment-actions">
+            @if (appointment.status === 'pending') {
+              <button (click)="updateStatus(appointment, 'confirmed')" class="btn-confirm">✓ Potvrdi</button>
+              <button (click)="updateStatus(appointment, 'cancelled')" class="btn-cancel">✗ Otkaži</button>
+            }
+            @if (appointment.status === 'confirmed') {
+              <button (click)="updateStatus(appointment, 'cancelled')" class="btn-cancel">✗ Otkaži</button>
+            }
+            @if (appointment.status === 'cancelled') {
+              <button (click)="updateStatus(appointment, 'pending')" class="btn-pending">↺ Vrati na čekanje</button>
+            }
+          </div>
+        </div>
+      }
+    </div>
+  </div>
+</div>

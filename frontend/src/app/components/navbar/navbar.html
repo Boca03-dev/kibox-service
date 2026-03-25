@@ -1,0 +1,33 @@
+<nav class="navbar">
+  <div class="navbar-brand">
+    <a routerLink="/">
+      <span class="brand-name">KiBox</span>
+      <span class="brand-sub">Service</span>
+    </a>
+  </div>
+
+  <div class="navbar-links">
+    <a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">Početna</a>
+    <a routerLink="/configurator" routerLinkActive="active">Konfigurator</a>
+    <a routerLink="/appointment" routerLinkActive="active">Zakaži termin</a>
+    <a routerLink="/contact" routerLinkActive="active">Kontakt</a>
+
+    @if (isLoggedIn && !isAdmin) {
+      <a routerLink="/my-configurations" routerLinkActive="active">Moje konfiguracije</a>
+    }
+
+    @if (isAdmin) {
+      <a routerLink="/admin" routerLinkActive="active">Admin panel</a>
+    }
+  </div>
+
+  <div class="navbar-auth">
+    @if (!isLoggedIn) {
+      <a routerLink="/login" class="btn-login">Prijava</a>
+      <a routerLink="/register" class="btn-register">Registracija</a>
+    } @else {
+      <span class="user-name">{{ userName }}</span>
+      <button (click)="logout()" class="btn-logout">Odjava</button>
+    }
+  </div>
+</nav>
