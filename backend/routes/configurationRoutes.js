@@ -5,8 +5,8 @@ const { protect, adminOnly } = require('../middleware/authMiddleware');
 
 router.post('/', protect, createConfiguration);
 router.get('/my', protect, getUserConfigurations);
-router.delete('/:id', protect, deleteConfiguration);
 router.post('/generate', generateConfiguration);
 router.get('/all', protect, adminOnly, getAllConfigurations);
+router.delete('/:id', protect, deleteConfiguration);
 
 module.exports = router;

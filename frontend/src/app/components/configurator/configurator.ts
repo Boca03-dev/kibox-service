@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ComponentService } from '../../services/component';
 import { ConfigurationService } from '../../services/configuration';
@@ -49,7 +49,8 @@ export class Configurator implements OnInit {
     private componentService: ComponentService,
     private configService: ConfigurationService,
     private authService: AuthService,
-    private router: Router
+    private router: Router,
+    private cdr: ChangeDetectorRef
   ) {}
 
   ngOnInit(): void {
@@ -90,6 +91,7 @@ export class Configurator implements OnInit {
         this.loading = false;
         this.generatedConfig = data;
         this.buildGeneratedItems(data);
+        this.cdr.detectChanges();
       },
       error: (err) => {
         this.loading = false;
@@ -107,6 +109,7 @@ export class Configurator implements OnInit {
         this.loading = false;
         this.generatedConfig = data;
         this.buildGeneratedItems(data);
+        this.cdr.detectChanges();
       },
       error: (err) => {
         this.loading = false;
