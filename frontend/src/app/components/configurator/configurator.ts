@@ -4,6 +4,7 @@ import { ComponentService } from '../../services/component';
 import { ConfigurationService } from '../../services/configuration';
 import { AuthService } from '../../services/auth';
 import { Router } from '@angular/router';
+import { GameService } from '../../services/game';
 
 @Component({
   selector: 'app-configurator',
@@ -36,29 +37,28 @@ export class Configurator implements OnInit {
     { key: 'case', label: '📦 Kućište' }
   ];
 
-  availableGames = [
-    'GTA V', 'GTA VI', 'Cyberpunk 2077', 'Red Dead Redemption 2', 'Elden Ring',
-    'Fortnite', 'Valorant', 'CS2', 'League of Legends', 'Minecraft',
-    'The Witcher 3', 'God of War', 'Hogwarts Legacy', 'FIFA 25', 'Call of Duty',
-    'Apex Legends', 'Rust', 'ARK: Survival', 'Battlefield 2042', 'Spider-Man',
-    'Assassin\'s Creed Mirage', 'Starfield', 'Diablo IV', 'Path of Exile 2', 'Palworld',
-    'Baldur\'s Gate 3', 'Alan Wake 2', 'The Last of Us', 'Resident Evil 4', 'Detroit'
-  ];
+  availableGames : string[]= [];
 
   constructor(
     private componentService: ComponentService,
     private configService: ConfigurationService,
     private authService: AuthService,
     private router: Router,
-    private cdr: ChangeDetectorRef
+    private cdr: ChangeDetectorRef,
+    private gameService: GameService
   ) {}
 
   ngOnInit(): void {
-    this.componentService.getComponents().subscribe({
-      next: (data) => this.allComponents = data,
-      error: () => this.errorMessage = 'Greška pri učitavanju komponenti'
-    });
-  }
+  this.componentService.getComponents().subscribe({
+    next: (data) => this.allComponents = data,
+    error: () => this.errorMessage = 'Greška pri učitavanju komponenti'
+  });
+
+  this.gameService.getGames().subscribe({
+    next: (data) => this.availableGames = data.map((g: any) => g.name),
+    error: () => this.errorMessage = 'Greška pri učitavanju igrica'
+  });
+}
 
   getComponentsByType(type: string): any[] {
     return this.allComponents.filter(c => c.type === type);
@@ -101,22 +101,40 @@ export class Configurator implements OnInit {
   }
 
   generateByGames(): void {
-    this.loading = true;
-    this.generatedConfig = null;
-    const minBudget = 2000;
-    this.configService.generateConfiguration({ budget: minBudget, purpose: 'gaming', games: this.selectedGames }).subscribe({
-      next: (data) => {
-        this.loading = false;
-        this.generatedConfig = data;
-        this.buildGeneratedItems(data);
-        this.cdr.detectChanges();
-      },
-      error: (err) => {
-        this.loading = false;
-        this.errorMessage = err.error?.message || 'Greška pri generisanju';
-      }
-    });
-  }
+  this.loading = true;
+  this.generatedConfig = null;
+
+  this.gameService.getGames().subscribe({
+    next: (games) => {
+      const selectedGameData = games.filter((g: any) => this.selectedGames.includes(g.name));
+
+      const maxGpuPerformance = Math.max(...selectedGameData.map((g: any) => g.recommendedRequirements.gpuPerformance));
+      const maxCpuPerformance = Math.max(...selectedGameData.map((g: any) => g.recommendedRequirements.cpuPerformance));
+      const maxRam = Math.max(...selectedGameData.map((g: any) => g.recommendedRequirements.ramGB));
+
+      this.configService.generateConfiguration({
+        budget: 9999,
+        purpose: 'gaming',
+        games: this.selectedGames,
+        minGpuPerformance: maxGpuPerformance,
+        minCpuPerformance: maxCpuPerformance,
+        minRamGB: maxRam
+      }).subscribe({
+        next: (data) => {
+          this.loading = false;
+          this.generatedConfig = data;
+          this.buildGeneratedItems(data);
+          this.cdr.detectChanges();
+        },
+        error: (err) => {
+          this.loading = false;
+          this.errorMessage = err.error?.message || 'Greška pri generisanju';
+          this.cdr.detectChanges();
+        }
+      });
+    }
+  });
+}
 
   buildGeneratedItems(data: any): void {
     const labels: any = { cpu: 'CPU', gpu: 'GPU', ram: 'RAM', storage: 'Storage', motherboard: 'Matična', psu: 'Napajanje', case: 'Kućište' };

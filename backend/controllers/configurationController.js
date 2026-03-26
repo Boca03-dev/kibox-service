@@ -34,47 +34,49 @@ exports.deleteConfiguration = async (req, res) => {
 
 exports.generateConfiguration = async (req, res) => {
   try {
-    const { budget, purpose } = req.body;
+    const { budget, purpose, minGpuPerformance, minCpuPerformance, minRamGB } = req.body;
 
     const components = await Component.find();
 
-    const cpus = components.filter(c => c.type === 'cpu').sort((a, b) => b.performance - a.performance);
-    const gpus = components.filter(c => c.type === 'gpu').sort((a, b) => b.performance - a.performance);
-    const rams = components.filter(c => c.type === 'ram').sort((a, b) => b.performance - a.performance);
-    const storages = components.filter(c => c.type === 'storage').sort((a, b) => b.performance - a.performance);
-    const psus = components.filter(c => c.type === 'psu');
-    const cases = components.filter(c => c.type === 'case');
-    const motherboards = components.filter(c => c.type === 'motherboard');
+    let cpus = components.filter(c => c.type === 'cpu');
+    let gpus = components.filter(c => c.type === 'gpu');
+    let rams = components.filter(c => c.type === 'ram');
+    let storages = components.filter(c => c.type === 'storage');
+    let psus = components.filter(c => c.type === 'psu');
+    let cases = components.filter(c => c.type === 'case');
+    let motherboards = components.filter(c => c.type === 'motherboard');
 
-    let bestConfig = null;
-    let bestPerformance = 0;
+    if (minGpuPerformance) gpus = gpus.filter(g => g.performance >= minGpuPerformance);
+    if (minCpuPerformance) cpus = cpus.filter(c => c.performance >= minCpuPerformance);
+    if (minRamGB) rams = rams.filter(r => r.specs?.capacity >= minRamGB);
 
-    for (let cpu of cpus) {
-      for (let gpu of gpus) {
-        for (let ram of rams) {
-          for (let storage of storages) {
-            for (let psu of psus) {
-              for (let caseItem of cases) {
-                for (let mb of motherboards) {
-                  const total = cpu.price + gpu.price + ram.price + storage.price + psu.price + caseItem.price + mb.price;
-                  if (total <= budget) {
-                    const performance = cpu.performance + gpu.performance + ram.performance + storage.performance;
-                    if (performance > bestPerformance) {
-                      bestPerformance = performance;
-                      bestConfig = { cpu, gpu, ram, storage, psu, case: caseItem, motherboard: mb, totalPrice: total };
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
+    cpus.sort((a, b) => a.price - b.price);
+    gpus.sort((a, b) => a.price - b.price);
+    rams.sort((a, b) => a.price - b.price);
+    storages.sort((a, b) => a.price - b.price);
+    psus.sort((a, b) => a.price - b.price);
+    cases.sort((a, b) => a.price - b.price);
+    motherboards.sort((a, b) => a.price - b.price);
+
+    if (!cpus.length || !gpus.length || !rams.length || !storages.length || !psus.length || !cases.length || !motherboards.length) {
+      return res.status(404).json({ message: 'Nije pronađena konfiguracija za zadate zahteve' });
     }
 
-    if (!bestConfig) return res.status(404).json({ message: 'Nije pronađena konfiguracija za zadati budžet' });
+    const cpu = cpus[0];
+    const gpu = gpus[0];
+    const ram = rams[0];
+    const storage = storages[0];
+    const psu = psus[0];
+    const caseItem = cases[0];
+    const motherboard = motherboards[0];
 
-    res.json(bestConfig);
+    const totalPrice = cpu.price + gpu.price + ram.price + storage.price + psu.price + caseItem.price + motherboard.price;
+
+    if (budget !== 9999 && totalPrice > budget) {
+      return res.status(404).json({ message: 'Nije pronađena konfiguracija za zadati budžet' });
+    }
+
+    res.json({ cpu, gpu, ram, storage, psu, case: caseItem, motherboard, totalPrice });
   } catch (err) {
     res.status(500).json({ message: err.message });
   }
