@@ -1,0 +1,73 @@
+<div class="admin-page">
+  <div class="admin-sidebar">
+    <div class="sidebar-brand">
+      <h2>KiBox Admin</h2>
+    </div>
+    <nav class="sidebar-nav">
+      <a routerLink="/admin" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">📊 Dashboard</a>
+      <a routerLink="/admin/messages" routerLinkActive="active">✉️ Poruke</a>
+      <a routerLink="/admin/appointments" routerLinkActive="active">📅 Termini</a>
+      <a routerLink="/admin/components" routerLinkActive="active">🖥️ Komponente</a>
+      <a routerLink="/admin/games" routerLinkActive="active">🎮 Igrice</a>
+      <a routerLink="/admin/configurations" routerLinkActive="active">⚙️ Konfiguracije</a>
+    </nav>
+    <button (click)="logout()" class="btn-logout">🚪 Odjava</button>
+  </div>
+
+  <div class="admin-content">
+    <h1>Zahtevi za konfiguracije</h1>
+
+    @if (loading) {
+      <div class="loading">Učitavanje...</div>
+    }
+
+    @if (!loading && configurations.length === 0) {
+      <div class="empty-state">
+        <span>⚙️</span>
+        <h3>Nema zahteva za konfiguracije</h3>
+      </div>
+    }
+
+    <div class="configurations-list">
+      @for (config of configurations; track config._id) {
+        <div class="config-card">
+          <div class="config-header">
+            <div class="config-info">
+              <h3>{{ config.name }}</h3>
+              <span class="config-user">👤 {{ config.user?.name }} ({{ config.user?.email }})</span>
+            </div>
+            <div class="config-meta">
+              <span class="config-price">{{ config.totalPrice }}€</span>
+              <span class="config-date">{{ config.createdAt | date:'dd.MM.yyyy HH:mm' }}</span>
+            </div>
+          </div>
+
+          <div class="config-components">
+            @for (type of componentTypes; track type.key) {
+              @if (getComponentName(config, type.key) !== '—') {
+                <div class="component-row">
+                  <span class="component-type">{{ type.label }}</span>
+                  <span class="component-name">{{ getComponentName(config, type.key) }}</span>
+                </div>
+              }
+            }
+          </div>
+
+          @if (config.purpose) {
+            <div class="config-tags">
+              <span class="tag">🎯 {{ config.purpose }}</span>
+            </div>
+          }
+
+          @if (config.games?.length > 0) {
+            <div class="config-tags">
+              @for (game of config.games; track game) {
+                <span class="tag">🎮 {{ game }}</span>
+              }
+            </div>
+          }
+        </div>
+      }
+    </div>
+  </div>
+</div>

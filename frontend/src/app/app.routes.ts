@@ -12,6 +12,7 @@ import { Appointments } from './components/admin/appointments/appointments';
 import { authGuard, adminGuard } from './guards/auth-guard';
 import { Components } from './components/admin/components/components';
 import { Games } from './components/admin/games/games';
+import { Configurations } from './components/admin/configurations/configurations';
 
 
 export const routes: Routes = [
@@ -27,5 +28,6 @@ export const routes: Routes = [
   { path: 'admin/appointments', component: Appointments, canActivate: [adminGuard] },
   { path: 'admin/components', component: Components, canActivate: [adminGuard] },
   { path: 'admin/games', component: Games, canActivate: [adminGuard] },
+  { path: 'admin/configurations', component: Configurations, canActivate: [adminGuard] },
   { path: '**', redirectTo: '' },
 ];
