@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { DatePipe } from '@angular/common';
 import { ConfigurationService } from '../../services/configuration';
@@ -26,15 +26,19 @@ export class MyConfigurations implements OnInit {
     { key: 'case', label: 'Kućište' }
   ];
 
-  constructor(private configService: ConfigurationService) {}
+  constructor(private configService: ConfigurationService, private cdr: ChangeDetectorRef) {}
 
   ngOnInit(): void {
     this.configService.getUserConfigurations().subscribe({
       next: (data) => {
         this.configurations = data;
         this.loading = false;
+        this.cdr.detectChanges();
       },
-      error: () => this.loading = false
+      error: () => {
+        this.loading = false;
+        this.cdr.detectChanges();
+      }
     });
   }
 
@@ -45,7 +49,10 @@ export class MyConfigurations implements OnInit {
   deleteConfig(id: string): void {
     if (!confirm('Da li ste sigurni da želite da obrišete ovu konfiguraciju?')) return;
     this.configService.deleteConfiguration(id).subscribe({
-      next: () => this.configurations = this.configurations.filter(c => c._id !== id)
+      next: () => {
+        this.configurations = this.configurations.filter(c => c._id !== id);
+        this.cdr.detectChanges();
+      }
     });
   }
 
