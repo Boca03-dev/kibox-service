@@ -10,6 +10,9 @@ import { Dashboard } from './components/admin/dashboard/dashboard';
 import { Messages } from './components/admin/messages/messages';
 import { Appointments } from './components/admin/appointments/appointments';
 import { authGuard, adminGuard } from './guards/auth-guard';
+import { Components } from './components/admin/components/components';
+import { Games } from './components/admin/games/games';
+
 
 export const routes: Routes = [
   { path: '', component: Home },
@@ -22,5 +25,7 @@ export const routes: Routes = [
   { path: 'admin', component: Dashboard, canActivate: [adminGuard] },
   { path: 'admin/messages', component: Messages, canActivate: [adminGuard] },
   { path: 'admin/appointments', component: Appointments, canActivate: [adminGuard] },
-  { path: '**', redirectTo: '' }
+  { path: 'admin/components', component: Components, canActivate: [adminGuard] },
+  { path: 'admin/games', component: Games, canActivate: [adminGuard] },
+  { path: '**', redirectTo: '' },
 ];

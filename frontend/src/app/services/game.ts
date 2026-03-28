@@ -12,4 +12,12 @@ export class GameService {
   getGames(): Observable<any> {
     return this.api.get('games');
   }
+
+  createGame(data: any): Observable<any> {
+    return this.api.post('games', data, true);
+  }
+
+  deleteGame(id: string): Observable<any> {
+    return this.api.delete(`games/${id}`, true);
+  }
 }

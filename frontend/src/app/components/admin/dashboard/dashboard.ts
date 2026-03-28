@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef  } from '@angular/core';
 import { Router, RouterLink, RouterLinkActive } from '@angular/router';
 import { AuthService } from '../../../services/auth';
 import { MessageService } from '../../../services/message';
@@ -23,7 +23,8 @@ export class Dashboard implements OnInit {
     private messageService: MessageService,
     private appointmentService: AppointmentService,
     private configService: ConfigurationService,
-    private router: Router
+    private router: Router,
+    private cdr: ChangeDetectorRef
   ) {}
 
   ngOnInit(): void {
@@ -33,17 +34,24 @@ export class Dashboard implements OnInit {
     }
 
     this.messageService.getMessages().subscribe({
-      next: (data) => this.unreadMessages = data.filter((m: any) => !m.read).length
+      next: (data) => {
+        this.unreadMessages = data.filter((m: any) => !m.read).length;
+        this.cdr.detectChanges();
+      }
     });
 
     this.appointmentService.getAppointments().subscribe({
-      next: (data) => this.pendingAppointments = data.filter((a: any) => a.status === 'pending').length
+      next: (data) => {
+        this.pendingAppointments = data.filter((a: any) => a.status === 'pending').length;
+        this.cdr.detectChanges();
+      }
     });
 
     this.configService.getAllConfigurations().subscribe({
       next: (data) => {
         this.totalConfigurations = data.length;
         this.loading = false;
+        this.cdr.detectChanges(); 
       }
     });
   }
@@ -51,5 +59,6 @@ export class Dashboard implements OnInit {
   logout(): void {
     this.authService.logout();
     this.router.navigate(['/']);
+    this.cdr.detectChanges();
   }
 }

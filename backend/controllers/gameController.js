@@ -8,3 +8,21 @@ exports.getGames = async (req, res) => {
     res.status(500).json({ message: err.message });
   }
 };
+
+exports.createGame = async (req, res) => {
+  try {
+    const game = await Game.create(req.body);
+    res.status(201).json(game);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+};
+
+exports.deleteGame = async (req, res) => {
+  try {
+    await Game.findByIdAndDelete(req.params.id);
+    res.json({ message: 'Igrica obrisana' });
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+};

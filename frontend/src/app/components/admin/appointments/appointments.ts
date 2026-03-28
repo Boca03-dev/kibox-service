@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { Router, RouterLink, RouterLinkActive } from '@angular/router';
 import { DatePipe } from '@angular/common';
 import { AuthService } from '../../../services/auth';
@@ -18,7 +18,8 @@ export class Appointments implements OnInit {
   constructor(
     private authService: AuthService,
     private appointmentService: AppointmentService,
-    private router: Router
+    private router: Router,
+    private cdr: ChangeDetectorRef
   ) {}
 
   ngOnInit(): void {
@@ -31,8 +32,12 @@ export class Appointments implements OnInit {
       next: (data) => {
         this.appointments = data;
         this.loading = false;
+        this.cdr.detectChanges();
       },
-      error: () => this.loading = false
+      error: () => {
+        this.loading = false;
+        this.cdr.detectChanges();
+      }
     });
   }
 
@@ -47,12 +52,16 @@ export class Appointments implements OnInit {
 
   updateStatus(appointment: any, status: string): void {
     this.appointmentService.updateStatus(appointment._id, status).subscribe({
-      next: () => appointment.status = status
+      next: () => {
+        appointment.status = status;
+        this.cdr.detectChanges();
+      }
     });
   }
 
   logout(): void {
     this.authService.logout();
     this.router.navigate(['/']);
+    this.cdr.detectChanges();
   }
 }

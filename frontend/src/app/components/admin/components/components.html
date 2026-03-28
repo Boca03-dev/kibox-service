@@ -1,0 +1,114 @@
+<div class="admin-page">
+  <div class="admin-sidebar">
+    <div class="sidebar-brand">
+      <h2>KiBox Admin</h2>
+    </div>
+    <nav class="sidebar-nav">
+      <a routerLink="/admin" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">📊 Dashboard</a>
+      <a routerLink="/admin/messages" routerLinkActive="active">✉️ Poruke</a>
+      <a routerLink="/admin/appointments" routerLinkActive="active">📅 Termini</a>
+      <a routerLink="/admin/components" routerLinkActive="active">🖥️ Komponente</a>
+      <a routerLink="/admin/games" routerLinkActive="active">🎮 Igrice</a>
+    </nav>
+    <button (click)="logout()" class="btn-logout">🚪 Odjava</button>
+  </div>
+
+  <div class="admin-content">
+    <h1>Komponente</h1>
+
+    <div class="add-form">
+      <h2>Dodaj komponentu</h2>
+      <div class="form-grid">
+        <div class="form-group">
+          <label>Naziv</label>
+          <input type="text" [(ngModel)]="newComponent.name"/>
+        </div>
+        <div class="form-group">
+          <label>Tip</label>
+          <select [(ngModel)]="newComponent.type">
+            <option value="cpu">CPU</option>
+            <option value="gpu">GPU</option>
+            <option value="ram">RAM</option>
+            <option value="storage">Storage</option>
+            <option value="motherboard">Matična ploča</option>
+            <option value="psu">Napajanje</option>
+            <option value="case">Kućište</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Brand</label>
+          <input type="text" [(ngModel)]="newComponent.brand"/>
+        </div>
+        <div class="form-group">
+          <label>Cena (€)</label>
+          <input type="number" [(ngModel)]="newComponent.price"/>
+        </div>
+        <div class="form-group">
+          <label>Performance (1-100)</label>
+          <input type="number" [(ngModel)]="newComponent.performance"/>
+        </div>
+        <div class="form-group">
+          <label>TDP (W)</label>
+          <input type="number" [(ngModel)]="newComponent.tdp"/>
+        </div>
+      </div>
+      @if (successMessage) {
+        <div class="success-msg">{{ successMessage }}</div>
+      }
+      @if (errorMessage) {
+        <div class="error-msg">{{ errorMessage }}</div>
+      }
+      <button (click)="addComponent()" class="btn-primary" [disabled]="loading">
+        {{ loading ? 'Dodavanje...' : '+ Dodaj komponentu' }}
+      </button>
+    </div>
+
+    <div class="filter-bar">
+      <label>Filter po tipu:</label>
+      <select [(ngModel)]="filterType" (ngModelChange)="filterComponents()">
+        <option value="">Sve</option>
+        <option value="cpu">CPU</option>
+        <option value="gpu">GPU</option>
+        <option value="ram">RAM</option>
+        <option value="storage">Storage</option>
+        <option value="motherboard">Matična ploča</option>
+        <option value="psu">Napajanje</option>
+        <option value="case">Kućište</option>
+      </select>
+    </div>
+
+    <div class="components-table">
+      <table>
+        <thead>
+          <tr>
+            <th>Naziv</th>
+            <th>Tip</th>
+            <th>Brand</th>
+            <th>Cena</th>
+            <th>Performance</th>
+            <th>Akcija</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (comp of filteredComponents; track comp._id) {
+            <tr>
+              <td>{{ comp.name }}</td>
+              <td><span class="badge-type">{{ comp.type }}</span></td>
+              <td>{{ comp.brand }}</td>
+              <td>{{ comp.price }}€</td>
+              <td>
+                <div class="performance-bar">
+                  <div class="performance-fill" [style.width.%]="comp.performance"></div>
+                  <span>{{ comp.performance }}</span>
+                </div>
+              </td>
+              <td>
+                <button (click)="deleteComponent(comp._id)" class="btn-delete">🗑️</button>
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

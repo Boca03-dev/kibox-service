@@ -1,0 +1,97 @@
+<div class="admin-page">
+  <div class="admin-sidebar">
+    <div class="sidebar-brand">
+      <h2>KiBox Admin</h2>
+    </div>
+    <nav class="sidebar-nav">
+      <a routerLink="/admin" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">📊 Dashboard</a>
+      <a routerLink="/admin/messages" routerLinkActive="active">✉️ Poruke</a>
+      <a routerLink="/admin/appointments" routerLinkActive="active">📅 Termini</a>
+      <a routerLink="/admin/components" routerLinkActive="active">🖥️ Komponente</a>
+      <a routerLink="/admin/games" routerLinkActive="active">🎮 Igrice</a>
+    </nav>
+    <button (click)="logout()" class="btn-logout">🚪 Odjava</button>
+  </div>
+
+  <div class="admin-content">
+    <h1>Igrice</h1>
+
+    <div class="add-form">
+      <h2>Dodaj igricu</h2>
+      <div class="form-grid">
+        <div class="form-group">
+          <label>Naziv igrice</label>
+          <input type="text" [(ngModel)]="newGame.name"/>
+        </div>
+        <div class="form-group">
+          <label>Min RAM (GB)</label>
+          <input type="number" [(ngModel)]="newGame.minRequirements.ramGB"/>
+        </div>
+        <div class="form-group">
+          <label>Min GPU Performance</label>
+          <input type="number" [(ngModel)]="newGame.minRequirements.gpuPerformance"/>
+        </div>
+        <div class="form-group">
+          <label>Min CPU Performance</label>
+          <input type="number" [(ngModel)]="newGame.minRequirements.cpuPerformance"/>
+        </div>
+        <div class="form-group">
+          <label>Rec RAM (GB)</label>
+          <input type="number" [(ngModel)]="newGame.recommendedRequirements.ramGB" />
+        </div>
+        <div class="form-group">
+          <label>Rec GPU Performance</label>
+          <input type="number" [(ngModel)]="newGame.recommendedRequirements.gpuPerformance"/>
+        </div>
+        <div class="form-group">
+          <label>Rec CPU Performance</label>
+          <input type="number" [(ngModel)]="newGame.recommendedRequirements.cpuPerformance"/>
+        </div>
+      </div>
+
+      @if (successMessage) {
+        <div class="success-msg">{{ successMessage }}</div>
+      }
+      @if (errorMessage) {
+        <div class="error-msg">{{ errorMessage }}</div>
+      }
+
+      <button (click)="addGame()" class="btn-primary" [disabled]="loading">
+        {{ loading ? 'Dodavanje...' : '+ Dodaj igricu' }}
+      </button>
+    </div>
+
+    <div class="games-table">
+      <table>
+        <thead>
+          <tr>
+            <th>Naziv</th>
+            <th>Min RAM</th>
+            <th>Min GPU</th>
+            <th>Min CPU</th>
+            <th>Rec RAM</th>
+            <th>Rec GPU</th>
+            <th>Rec CPU</th>
+            <th>Akcija</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (game of games; track game._id) {
+            <tr>
+              <td><strong>{{ game.name }}</strong></td>
+              <td>{{ game.minRequirements.ramGB }}GB</td>
+              <td>{{ game.minRequirements.gpuPerformance }}</td>
+              <td>{{ game.minRequirements.cpuPerformance }}</td>
+              <td>{{ game.recommendedRequirements.ramGB }}GB</td>
+              <td>{{ game.recommendedRequirements.gpuPerformance }}</td>
+              <td>{{ game.recommendedRequirements.cpuPerformance }}</td>
+              <td>
+                <button (click)="deleteGame(game._id)" class="btn-delete">🗑️</button>
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
