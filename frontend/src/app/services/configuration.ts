@@ -28,4 +28,8 @@ export class ConfigurationService {
   getAllConfigurations(): Observable<any> {
     return this.api.get('configurations/all', true);
   }
+
+  sendToAdmin(id: string): Observable<any> {
+    return this.api.put(`configurations/${id}/send`, {}, true);
+  }
 }

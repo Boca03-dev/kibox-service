@@ -82,4 +82,10 @@ export class MyConfigurations implements OnInit {
   getCompareConfigs(): any[] {
     return this.configurations.filter(c => this.selectedForCompare.includes(c._id));
   }
+
+  sendToAdmin(config: any): void {
+    this.configService.sendToAdmin(config._id).subscribe({
+      next: () => config.sentToAdmin = true
+    });
+  }
 }

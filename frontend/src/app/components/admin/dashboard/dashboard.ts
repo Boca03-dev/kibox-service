@@ -4,11 +4,12 @@ import { AuthService } from '../../../services/auth';
 import { MessageService } from '../../../services/message';
 import { AppointmentService } from '../../../services/appointment';
 import { ConfigurationService } from '../../../services/configuration';
+import { AdminSidebar } from '../admin-sidebar/admin-sidebar';
 
 @Component({
   selector: 'app-dashboard',
   standalone: true,
-  imports: [RouterLink, RouterLinkActive],
+  imports: [RouterLink, RouterLinkActive, AdminSidebar],
   templateUrl: './dashboard.html',
   styleUrl: './dashboard.css'
 })

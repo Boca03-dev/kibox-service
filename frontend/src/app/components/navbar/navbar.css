@@ -103,3 +103,30 @@
   border-color: #00c8ff;
   color: #00c8ff;
 }
+
+.nav-badge-link {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+}
+
+.nav-badge {
+  background: #e53e3e;
+  color: #ffffff;
+  font-size: 0.7rem;
+  font-weight: 700;
+  padding: 0.1rem 0.4rem;
+  border-radius: 20px;
+  min-width: 18px;
+  text-align: center;
+}
+
+.nav-badge-dot {
+  width: 8px;
+  height: 8px;
+  background: #e53e3e;
+  border-radius: 50%;
+  display: inline-block;
+  margin-bottom: 8px;
+}

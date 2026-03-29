@@ -20,4 +20,12 @@ export class AppointmentService {
   updateStatus(id: string, status: string): Observable<any> {
     return this.api.put(`appointments/${id}`, { status }, true);
   }
+
+  getUserAppointments(): Observable<any> {
+    return this.api.get('appointments/my', true);
+  }
+
+  markSeenByUser(): Observable<any> {
+    return this.api.put('appointments/seen', {}, true);
+  }
 }

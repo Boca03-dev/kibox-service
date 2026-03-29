@@ -1,18 +1,5 @@
 <div class="admin-page">
-  <div class="admin-sidebar">
-    <div class="sidebar-brand">
-      <h2>KiBox Admin</h2>
-    </div>
-    <nav class="sidebar-nav">
-      <a routerLink="/admin" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">📊 Dashboard</a>
-      <a routerLink="/admin/messages" routerLinkActive="active">✉️ Poruke</a>
-      <a routerLink="/admin/appointments" routerLinkActive="active">📅 Termini</a>
-      <a routerLink="/admin/components" routerLinkActive="active">🖥️ Komponente</a>
-      <a routerLink="/admin/games" routerLinkActive="active">🎮 Igrice</a>
-      <a routerLink="/admin/configurations" routerLinkActive="active">⚙️ Konfiguracije</a>
-    </nav>
-    <button (click)="logout()" class="btn-logout">🚪 Odjava</button>
-  </div>
+  <app-admin-sidebar></app-admin-sidebar>
 
   <div class="admin-content">
     <h1>Termini</h1>

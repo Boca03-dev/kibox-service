@@ -1,0 +1,51 @@
+<div class="notifications-page">
+  <div class="notifications-header">
+    <h1>Notifikacije</h1>
+    <p>Sve vaše obaveštenja na jednom mestu</p>
+  </div>
+
+  <div class="notifications-container">
+    @if (loading) {
+      <div class="loading">Učitavanje...</div>
+    }
+
+    @if (!loading && notifications.length === 0) {
+      <div class="empty-state">
+        <span>🔔</span>
+        <h3>Nema notifikacija</h3>
+        <p>Ovde će se prikazivati vaša obaveštenja</p>
+      </div>
+    }
+
+    @if (notifications.length > 0) {
+      <div class="notifications-toolbar">
+      <span class="unread-count">{{ unreadCount }} nepročitanih</span>
+      <div class="toolbar-actions">
+        @if (unreadCount > 0) {
+          <button (click)="markAllAsRead()" class="btn-mark-all">✓ Označi sve</button>
+        }
+        @if (readCount > 0) {
+          <button (click)="deleteAllRead()" class="btn-delete-all">🗑️ Obriši pročitane</button>
+        }
+      </div>
+    </div>
+
+      <div class="notifications-list">
+        @for (notification of notifications; track notification._id) {
+          <div class="notification-card" [class.unread]="!notification.read" (click)="onNotificationClick(notification)">
+            <div class="notification-icon">{{ getIcon(notification.type) }}</div>
+            <div class="notification-content">
+              <h3>{{ notification.title }}</h3>
+              <p>{{ notification.body }}</p>
+              <span class="notification-date">{{ notification.createdAt | date:'dd.MM.yyyy HH:mm' }}</span>
+            </div>
+            @if (!notification.read) {
+              <div class="unread-dot"></div>
+            }
+            <button (click)="deleteOne($event, notification._id)" class="btn-delete-single">🗑️</button>
+          </div>
+        }
+      </div>
+    }
+  </div>
+</div>

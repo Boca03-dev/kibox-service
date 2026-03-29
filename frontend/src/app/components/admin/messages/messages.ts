@@ -3,11 +3,12 @@ import { Router, RouterLink, RouterLinkActive } from '@angular/router';
 import { DatePipe } from '@angular/common';
 import { AuthService } from '../../../services/auth';
 import { MessageService } from '../../../services/message';
+import { AdminSidebar } from '../admin-sidebar/admin-sidebar';
 
 @Component({
   selector: 'app-messages',
   standalone: true,
-  imports: [RouterLink, RouterLinkActive, DatePipe],
+  imports: [RouterLink, RouterLinkActive, DatePipe, AdminSidebar],
   templateUrl: './messages.html',
   styleUrl: './messages.css'
 })

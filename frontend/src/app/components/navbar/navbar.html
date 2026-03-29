@@ -14,6 +14,8 @@
 
     @if (isLoggedIn && !isAdmin) {
       <a routerLink="/my-configurations" routerLinkActive="active">Moje konfiguracije</a>
+      <a routerLink="/my-appointments" routerLinkActive="active">Moji termini</a>
+      <a routerLink="/notifications" routerLinkActive="active">Notifikacije</a>
     }
 
     @if (isAdmin) {

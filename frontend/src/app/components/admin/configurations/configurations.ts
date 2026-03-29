@@ -3,11 +3,12 @@ import { Router, RouterLink, RouterLinkActive } from '@angular/router';
 import { DatePipe } from '@angular/common';
 import { AuthService } from '../../../services/auth';
 import { ConfigurationService } from '../../../services/configuration';
+import { AdminSidebar } from '../admin-sidebar/admin-sidebar';
 
 @Component({
   selector: 'app-configurations',
   standalone: true,
-  imports: [RouterLink, RouterLinkActive, DatePipe],
+  imports: [RouterLink, RouterLinkActive, DatePipe, AdminSidebar],
   templateUrl: './configurations.html',
   styleUrl: './configurations.css'
 })

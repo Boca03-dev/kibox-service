@@ -28,7 +28,10 @@
       <div class="form-row">
         <div class="form-group">
           <label>Telefon</label>
-          <input type="text" [(ngModel)]="form.phone" name="phone" placeholder="+381 60 ..." required />
+          <input type="text" [(ngModel)]="form.phone" name="phone" 
+            placeholder="+381 60 ... ili 06..."
+            pattern="(\+\d{9,15}|06\d{7,8})"
+            #phoneInput="ngModel" required />
         </div>
         <div class="form-group">
           <label>Željeni datum i vreme</label>

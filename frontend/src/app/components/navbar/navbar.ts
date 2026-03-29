@@ -14,7 +14,10 @@ export class Navbar implements OnInit {
   isAdmin = false;
   userName = '';
 
-  constructor(private authService: AuthService, private router: Router) {}
+  constructor(
+    private authService: AuthService,
+    private router: Router
+  ) {}
 
   ngOnInit(): void {
     this.authService.currentUser$.subscribe(user => {

@@ -1,5 +1,9 @@
 const mongoose = require('mongoose');
 const app = require('./app');
+const notificationRoutes = require('./routes/notificationRoutes');
+
+app.use('/api/notifications', notificationRoutes);
+
 require('dotenv').config();
 
 mongoose.connect(process.env.MONGO_URI)

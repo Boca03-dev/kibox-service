@@ -3,11 +3,12 @@ import { Router, RouterLink, RouterLinkActive } from '@angular/router';
 import { DatePipe } from '@angular/common';
 import { AuthService } from '../../../services/auth';
 import { AppointmentService } from '../../../services/appointment';
+import { AdminSidebar } from '../admin-sidebar/admin-sidebar';
 
 @Component({
   selector: 'app-appointments',
   standalone: true,
-  imports: [RouterLink, RouterLinkActive, DatePipe],
+  imports: [RouterLink, RouterLinkActive, DatePipe, AdminSidebar],
   templateUrl: './appointments.html',
   styleUrl: './appointments.css'
 })

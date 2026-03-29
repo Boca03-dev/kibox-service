@@ -86,7 +86,14 @@
           }
           <div class="config-card-footer">
             <span class="config-date">{{ config.createdAt | date:'dd.MM.yyyy' }}</span>
-            <button (click)="deleteConfig(config._id)" class="btn-delete">🗑️ Obriši</button>
+            <div class="footer-actions">
+              @if (!config.sentToAdmin) {
+                <button (click)="sendToAdmin(config)" class="btn-send">📤 Pošalji adminu</button>
+              } @else {
+                <span class="sent-badge">✅ Poslato</span>
+              }
+              <button (click)="deleteConfig(config._id)" class="btn-delete">🗑️ Obriši</button>
+            </div>
           </div>
         </div>
       }

@@ -276,3 +276,31 @@
   color: #00c8ff;
   font-size: 1.1rem;
 }
+
+.footer-actions {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+.btn-send {
+  background: transparent;
+  border: 1px solid #00c8ff;
+  color: #00c8ff;
+  padding: 0.3rem 0.8rem;
+  border-radius: 6px;
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.btn-send:hover {
+  background: #00c8ff;
+  color: #0a1628;
+}
+
+.sent-badge {
+  font-size: 0.85rem;
+  color: #276749;
+  font-weight: 600;
+}
