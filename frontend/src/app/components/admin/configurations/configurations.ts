@@ -56,6 +56,19 @@ export class Configurations implements OnInit {
     return config.components?.[type]?.name || '—';
   }
 
+  getComponentIcon(type: string): string {
+    const icons: any = {
+      cpu: 'fa-solid fa-microchip',
+      gpu: 'fa-solid fa-hard-drive',
+      ram: 'fa-solid fa-memory',
+      storage: 'fa-solid fa-database',
+      motherboard: 'fa-solid fa-circle-nodes',
+      psu: 'fa-solid fa-plug',
+      case: 'fa-solid fa-box'
+    };
+    return icons[type] || 'fa-solid fa-gear';
+  }
+
   logout(): void {
     this.authService.logout();
     this.router.navigate(['/']);

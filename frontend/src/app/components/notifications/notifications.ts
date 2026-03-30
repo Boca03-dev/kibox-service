@@ -2,11 +2,12 @@ import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
 import { DatePipe } from '@angular/common';
 import { NotificationService } from '../../services/notification';
+import { AdminSidebar } from '../admin/admin-sidebar/admin-sidebar';
 
 @Component({
   selector: 'app-notifications',
   standalone: true,
-  imports: [RouterLink, DatePipe],
+  imports: [RouterLink, DatePipe, AdminSidebar],
   templateUrl: './notifications.html',
   styleUrl: './notifications.css'
 })

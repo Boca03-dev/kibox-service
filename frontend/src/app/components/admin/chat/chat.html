@@ -1,0 +1,65 @@
+<div class="admin-page">
+  <app-admin-sidebar></app-admin-sidebar>
+
+  <div class="admin-content">
+    <h1>Chat</h1>
+
+    <div class="chat-layout">
+      <div class="conversations-list">
+        <h2>Konverzacije</h2>
+        @if (chats.length === 0) {
+          <div class="empty">Nema konverzacija</div>
+        }
+        @for (chat of chats; track chat._id) {
+          <div class="conversation-item" [class.active]="selectedChat?._id === chat._id"
+            (click)="selectChat(chat._id)">
+            <div class="conv-avatar">{{ chat.user?.name?.charAt(0) }}</div>
+            <div class="conv-info">
+              <h4>{{ chat.user?.name }}</h4>
+              <p>{{ chat.user?.email }}</p>
+              @if (getUnreadCount(chat) > 0) {
+                <span class="unread-badge">{{ getUnreadCount(chat) }}</span>
+              }
+            </div>
+          </div>
+        }
+      </div>
+
+      <div class="chat-window">
+        @if (!selectedChat) {
+          <div class="no-chat">
+            <span>💬</span>
+            <p>Odaberite konverzaciju</p>
+          </div>
+        }
+
+        @if (selectedChat) {
+          <div class="chat-header">
+            <h3>{{ selectedChat.user?.name }}</h3>
+            <span>{{ selectedChat.user?.email }}</span>
+          </div>
+
+          <div class="chat-messages" #messagesContainer>
+            @for (message of selectedChat.messages; track message._id) {
+              <div class="message" [class.mine]="isAdminMessage(message)" [class.theirs]="!isAdminMessage(message)">
+                <div class="message-bubble">
+                  <p>{{ message.content }}</p>
+                  <span class="message-time">{{ message.createdAt | date:'dd.MM HH:mm' }}</span>
+                </div>
+                <span class="message-sender">{{ isAdminMessage(message) ? 'Vi' : selectedChat.user?.name }}</span>
+              </div>
+            }
+          </div>
+
+          <div class="chat-input">
+            <input type="text" [(ngModel)]="newMessage" placeholder="Odgovorite korisniku..."
+              (keyup.enter)="sendMessage()" />
+            <button (click)="sendMessage()" [disabled]="!newMessage.trim()">
+              Pošalji ➤
+            </button>
+          </div>
+        }
+      </div>
+    </div>
+  </div>
+</div>

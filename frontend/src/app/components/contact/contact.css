@@ -39,10 +39,11 @@
 }
 
 .info-item {
+  color: #3498db;
   display: flex;
   gap: 1rem;
   margin-bottom: 1.5rem;
-  align-items: flex-start;
+  align-items: center;
 }
 
 .info-item span {

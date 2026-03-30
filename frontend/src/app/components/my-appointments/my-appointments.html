@@ -11,7 +11,7 @@
 
     @if (!loading && appointments.length === 0) {
       <div class="empty-state">
-        <span>📅</span>
+        <i class="fa-solid fa-calendar"></i>
         <h3>Nemate zakazanih termina</h3>
         <p>Zakažite termin za servisiranje vašeg uređaja!</p>
         <a routerLink="/appointment" class="btn-primary">Zakaži termin</a>
@@ -24,20 +24,18 @@
           <div class="appointment-header">
             <div class="appointment-info">
               <h3>{{ appointment.description }}</h3>
-              <span class="appointment-date">📅 {{ appointment.date | date:'dd.MM.yyyy HH:mm' }}</span>
+              <span class="appointment-date"><i class="fa-solid fa-calendar"></i> {{ appointment.date | date:'dd.MM.yyyy HH:mm' }}</span>
             </div>
             <div class="appointment-meta">
               <span class="badge" [class]="'badge-' + appointment.status">
+                <i [class]="getStatusIcon(appointment.status)" style="margin-right: 5px;"></i>
                 {{ getStatusLabel(appointment.status) }}
               </span>
-              @if (appointment.status !== 'pending' && !appointment.seenByUser) {
-                <span class="badge-new">Novo!</span>
-              }
             </div>
           </div>
           <div class="appointment-details">
-            <span>📞 {{ appointment.phone }}</span>
-            <span>✉️ {{ appointment.email }}</span>
+            <span><i class="fa-solid fa-phone"></i> {{ appointment.phone }}</span>
+            <span><i class="fa-solid fa-envelope"></i> {{ appointment.email }}</span>
           </div>
         </div>
       }

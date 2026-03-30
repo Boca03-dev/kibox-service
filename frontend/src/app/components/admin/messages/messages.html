@@ -2,16 +2,22 @@
   <app-admin-sidebar></app-admin-sidebar>
 
   <div class="admin-content">
-    <h1>Poruke</h1>
+    <div class="header-section">
+      <h1>Poruke</h1>
+      <p>Pregledajte i upravljajte upitima korisnika sa kontakt forme</p>
+    </div>
 
     @if (loading) {
-      <div class="loading">Učitavanje...</div>
+      <div class="loading">
+        <i class="fa-solid fa-circle-notch fa-spin"></i> Učitavanje poruka...
+      </div>
     }
 
     @if (!loading && messages.length === 0) {
       <div class="empty-state">
-        <span>✉️</span>
+        <i class="fa-regular fa-envelope-open"></i>
         <h3>Nema poruka</h3>
+        <p>Trenutno su sve poruke pročitane ili ih nema u bazi.</p>
       </div>
     }
 
@@ -20,23 +26,40 @@
         <div class="message-card" [class.unread]="!message.read">
           <div class="message-header">
             <div class="message-sender">
-              <h3>{{ message.name }}</h3>
-              <span>{{ message.email }}</span>
-              @if (message.phone) {
-                <span>• {{ message.phone }}</span>
-              }
+              <div class="title-row">
+                <i class="fa-solid fa-user-circle"></i>
+                <h3>{{ message.name }}</h3>
+              </div>
+              <div class="contact-details">
+                <span><i class="fa-regular fa-envelope"></i> {{ message.email }}</span>
+                @if (message.phone) {
+                  <span><i class="fa-solid fa-phone"></i> {{ message.phone }}</span>
+                }
+              </div>
             </div>
             <div class="message-meta">
-              <span class="message-date">{{ message.createdAt | date:'dd.MM.yyyy HH:mm' }}</span>
+              <span class="message-date">
+                <i class="fa-regular fa-clock"></i> {{ message.createdAt | date:'dd.MM.yyyy HH:mm' }}
+              </span>
               @if (!message.read) {
-                <span class="badge-unread">Nova</span>
+                <span class="badge-unread">Nova poruka</span>
               }
             </div>
           </div>
-          <p class="message-body">{{ message.message }}</p>
-          @if (!message.read) {
-            <button (click)="markAsRead(message)" class="btn-read">✓ Označi kao pročitano</button>
-          }
+          
+          <div class="message-content">
+            <p>{{ message.message }}</p>
+          </div>
+
+          <div class="message-actions">
+            @if (!message.read) {
+              <button (click)="markAsRead(message)" class="btn-read-action">
+                <i class="fa-solid fa-check-double"></i> Označi kao pročitano
+              </button>
+            } @else {
+               <span class="read-status"><i class="fa-solid fa-check"></i> Pročitano</span>
+            }
+          </div>
         </div>
       }
     </div>

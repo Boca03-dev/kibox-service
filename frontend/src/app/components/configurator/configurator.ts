@@ -28,13 +28,13 @@ export class Configurator implements OnInit {
   selectedComponents: any = {};
 
   componentTypes = [
-    { key: 'cpu', label: '🖥️ Procesor (CPU)' },
-    { key: 'gpu', label: '🎮 Grafička karta (GPU)' },
-    { key: 'ram', label: '💾 Radna memorija (RAM)' },
-    { key: 'storage', label: '💿 Skladište (Storage)' },
-    { key: 'motherboard', label: '🔌 Matična ploča' },
-    { key: 'psu', label: '⚡ Napajanje (PSU)' },
-    { key: 'case', label: '📦 Kućište' }
+    { key: 'cpu', label: 'Procesor (CPU)', icon: 'fa-solid fa-computer' },
+    { key: 'gpu', label: 'Grafička karta (GPU)', icon: 'fa-solid fa-video' },
+    { key: 'ram', label: 'Radna memorija (RAM)', icon: 'fa-solid fa-memory' },
+    { key: 'storage', label: 'Skladište (Storage)', icon: 'fa-solid fa-hard-drive' },
+    { key: 'motherboard', label: 'Matična ploča', icon: 'fa-solid fa-microchip' },
+    { key: 'psu', label: 'Napajanje (PSU)', icon: 'fa-solid fa-plug' },
+    { key: 'case', label: 'Kućište', icon: 'fa-solid fa-box' }
   ];
 
   availableGames : string[]= [];
@@ -137,11 +137,25 @@ export class Configurator implements OnInit {
 }
 
   buildGeneratedItems(data: any): void {
-    const labels: any = { cpu: 'CPU', gpu: 'GPU', ram: 'RAM', storage: 'Storage', motherboard: 'Matična', psu: 'Napajanje', case: 'Kućište' };
-    this.generatedConfigItems = Object.keys(labels)
-      .filter(key => data[key])
-      .map(key => ({ label: labels[key], name: data[key].name, price: data[key].price }));
-  }
+  const mapping: any = { 
+    cpu: { label: 'CPU', icon: 'fa-solid fa-computer' }, 
+    gpu: { label: 'GPU', icon: 'fa-solid fa-video' },
+    ram: { label: 'RAM', icon: 'fa-solid fa-memory' },
+    storage: { label: 'Storage', icon: 'fa-solid fa-hard-drive' },
+    motherboard: { label: 'Matična', icon: 'fa-solid fa-microchip' },
+    psu: { label: 'Napajanje', icon: 'fa-solid fa-plug' },
+    case: { label: 'Kućište', icon: 'fa-solid fa-box' }
+  };
+
+  this.generatedConfigItems = Object.keys(mapping)
+    .filter(key => data[key])
+    .map(key => ({ 
+      label: mapping[key].label, 
+      icon: mapping[key].icon, 
+      name: data[key].name, 
+      price: data[key].price 
+    }));
+}
 
   saveManualConfig(): void {
     if (!this.authService.isLoggedIn()) {

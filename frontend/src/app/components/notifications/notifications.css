@@ -186,3 +186,7 @@
 .notification-card:hover .btn-delete-single {
   opacity: 1;
 }
+
+i{
+  color: #3498db;
+}

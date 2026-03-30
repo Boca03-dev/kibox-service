@@ -11,7 +11,7 @@
 
     @if (!loading && notifications.length === 0) {
       <div class="empty-state">
-        <span>🔔</span>
+        <i class="fa-solid fa-bell fa-5x"></i>
         <h3>Nema notifikacija</h3>
         <p>Ovde će se prikazivati vaša obaveštenja</p>
       </div>
@@ -33,7 +33,9 @@
       <div class="notifications-list">
         @for (notification of notifications; track notification._id) {
           <div class="notification-card" [class.unread]="!notification.read" (click)="onNotificationClick(notification)">
-            <div class="notification-icon">{{ getIcon(notification.type) }}</div>
+            <div class="notification-icon">
+              <i class="fa-solid fa-bell"></i>
+            </div>
             <div class="notification-content">
               <h3>{{ notification.title }}</h3>
               <p>{{ notification.body }}</p>
@@ -42,7 +44,7 @@
             @if (!notification.read) {
               <div class="unread-dot"></div>
             }
-            <button (click)="deleteOne($event, notification._id)" class="btn-delete-single">🗑️</button>
+            <button (click)="deleteOne($event, notification._id)" class="btn-delete-single"><i class="fa-solid fa-trash-bin"></i></button>
           </div>
         }
       </div>

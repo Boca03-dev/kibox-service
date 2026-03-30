@@ -304,3 +304,18 @@
   color: #276749;
   font-weight: 600;
 }
+
+.compare-checkbox {
+  cursor: pointer;
+  font-size: 1.5rem;
+  transition: all 0.2s ease;
+}
+.compare-checkbox .fa-square-check {
+  color: #00d1ff;
+}
+.compare-checkbox .fa-square {
+  color: #ccc;
+}
+.compare-checkbox:hover {
+  transform: scale(1.1);
+}

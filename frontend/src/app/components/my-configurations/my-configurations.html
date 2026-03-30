@@ -11,7 +11,7 @@
 
     @if (!loading && configurations.length === 0) {
       <div class="empty-state">
-        <span>🖥️</span>
+        <i class="fa-solid fa-computer"></i>
         <h3>Nemate sačuvanih konfiguracija</h3>
         <p>Idite na konfigurator i napravite svoju prvu konfiguraciju!</p>
         <a routerLink="/configurator" class="btn-primary">Idi na konfigurator</a>
@@ -46,7 +46,7 @@
 
     @if (configurations.length > 0 && !compareMode) {
       <div class="configs-toolbar">
-        <button (click)="enterCompareMode()" class="btn-secondary">⚖️ Uporedi konfiguracije</button>
+        <button (click)="enterCompareMode()" class="btn-secondary"><i class="fa-solid fa-scale-balanced"></i> Uporedi konfiguracije</button>
       </div>
     }
 
@@ -61,8 +61,12 @@
         <div class="config-card" [class.selected]="isSelectedForCompare(config._id)">
           @if (compareMode) {
             <div class="compare-checkbox" (click)="toggleCompare(config._id)">
-              {{ isSelectedForCompare(config._id) ? '✅' : '⬜' }}
-            </div>
+            @if (isSelectedForCompare(config._id)) {
+              <i class="fa-solid fa-square-check"></i>
+            } @else {
+              <i class="fa-regular fa-square"></i>
+            }
+          </div>
           }
           <div class="config-card-header">
             <h3>{{ config.name }}</h3>
@@ -88,11 +92,12 @@
             <span class="config-date">{{ config.createdAt | date:'dd.MM.yyyy' }}</span>
             <div class="footer-actions">
               @if (!config.sentToAdmin) {
-                <button (click)="sendToAdmin(config)" class="btn-send">📤 Pošalji adminu</button>
+                <button (click)="sendToAdmin(config)" class="btn-send"><i class="fa-solid fa-inbox"></i> Pošalji adminu</button>
               } @else {
-                <span class="sent-badge">✅ Poslato</span>
+                <span class="sent-badge"><i class="fa-solid fa-circle-check"></i> Poslato</span>
               }
-              <button (click)="deleteConfig(config._id)" class="btn-delete">🗑️ Obriši</button>
+              <button (click)="deleteConfig(config._id)" class="btn-delete">
+                <i class="fa-solid fa-trash-can"></i> Obriši</button>
             </div>
           </div>
         </div>

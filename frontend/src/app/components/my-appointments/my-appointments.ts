@@ -37,11 +37,20 @@ export class MyAppointments implements OnInit {
   }
 
   getStatusLabel(status: string): string {
-    const labels: any = {
-      pending: '⏳ Na čekanju',
-      confirmed: '✅ Potvrđen',
-      cancelled: '❌ Otkazan'
-    };
-    return labels[status] || status;
-  }
+  const labels: any = {
+    pending: 'Na čekanju',
+    confirmed: 'Potvrđen',
+    cancelled: 'Otkazan'
+  };
+  return labels[status] || status;
+}
+
+getStatusIcon(status: string): string {
+  const icons: any = {
+    pending: 'fa-solid fa-clock-rotate-left',
+    confirmed: 'fa-solid fa-circle-check',
+    cancelled: 'fa-solid fa-circle-xmark'
+  };
+  return icons[status] || 'fa-solid fa-question';
+}
 }

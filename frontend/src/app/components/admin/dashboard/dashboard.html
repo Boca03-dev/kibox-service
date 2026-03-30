@@ -5,26 +5,28 @@
     <h1>Dashboard</h1>
 
     @if (loading) {
-      <div class="loading">Učitavanje...</div>
+      <div class="loading">Učitavanje podataka...</div>
     }
 
     <div class="stats-grid">
       <div class="stat-card">
-        <div class="stat-icon">✉️</div>
+        <i class="fa-regular fa-envelope fa-2x"></i>
         <div class="stat-info">
           <h3>{{ unreadMessages }}</h3>
           <p>Nepročitane poruke</p>
         </div>
       </div>
+      
       <div class="stat-card">
-        <div class="stat-icon">📅</div>
+        <i class="fa-regular fa-calendar-check fa-2x"></i>
         <div class="stat-info">
           <h3>{{ pendingAppointments }}</h3>
           <p>Termini na čekanju</p>
         </div>
       </div>
+      
       <div class="stat-card">
-        <div class="stat-icon">🖥️</div>
+        <i class="fa-solid fa-screwdriver-wrench fa-2x"></i>
         <div class="stat-info">
           <h3>{{ totalConfigurations }}</h3>
           <p>Zahtevi za konfiguracije</p>
@@ -36,16 +38,14 @@
       <h2>Brzi pristup</h2>
       <div class="links-grid">
         <a routerLink="/admin/messages" class="quick-link-card">
-          <span>✉️</span>
+          <i class="fa-solid fa-comment-dots"></i>
           <h3>Poruke</h3>
-          <p>Pregledajte sve kontakt poruke</p>
-        </a>
-        <a routerLink="/admin/appointments" class="quick-link-card">
-          <span>📅</span>
+          <p>Pregledajte i odgovorite na sve kontakt poruke</p>
+        </a> <a routerLink="/admin/appointments" class="quick-link-card">
+          <i class="fa-solid fa-business-time"></i>
           <h3>Termini</h3>
-          <p>Upravljajte zakazanim terminima</p>
-        </a>
-      </div>
+          <p>Upravljajte zakazanim terminima i statusima</p>
+        </a> </div>
     </div>
   </div>
 </div>

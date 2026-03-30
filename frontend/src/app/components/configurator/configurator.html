@@ -6,9 +6,17 @@
 
   <div class="configurator-container">
     <div class="tabs">
-      <button [class.active]="activeTab === 'manual'" (click)="activeTab = 'manual'">🔧 Ručni odabir</button>
-      <button [class.active]="activeTab === 'budget'" (click)="activeTab = 'budget'">💰 Po budžetu</button>
-      <button [class.active]="activeTab === 'games'" (click)="activeTab = 'games'">🎮 Po igricama</button>
+      <button [class.active]="activeTab === 'manual'" (click)="activeTab = 'manual'">
+        <i class="fa-solid fa-screwdriver-wrench"></i> Ručni odabir
+      </button>
+      
+      <button [class.active]="activeTab === 'budget'" (click)="activeTab = 'budget'">
+        <i class="fa-solid fa-money-bill-wave"></i> Po budžetu
+      </button>
+      
+      <button [class.active]="activeTab === 'games'" (click)="activeTab = 'games'">
+        <i class="fa-solid fa-gamepad"></i> Po igricama
+      </button>
     </div>
 
     @if (activeTab === 'manual') {
@@ -17,7 +25,10 @@
         <div class="components-grid">
           @for (type of componentTypes; track type.key) {
             <div class="component-select">
-              <label>{{ type.label }}</label>
+              <label>
+                <i [class]="type.icon" style="margin-right: 8px; width: 20px; text-align: center;"></i>
+                {{ type.label }}
+              </label>
               <select [(ngModel)]="selectedComponents[type.key]" [name]="type.key">
                 <option value="">-- Odaberite --</option>
                 @for (comp of getComponentsByType(type.key); track comp._id) {
@@ -70,14 +81,14 @@
             <div class="config-result">
               @for (item of generatedConfigItems; track item.label) {
                 <div class="config-item">
-                  <span class="item-label">{{ item.label }}</span>
+                  <span class="item-label">
+                    <i [class]="item.icon" style="margin-right: 10px;"></i>
+                    {{ item.label }}
+                  </span>
                   <span class="item-name">{{ item.name }}</span>
                   <span class="item-price">{{ item.price }}€</span>
                 </div>
               }
-              <div class="config-total">
-                Ukupno: <strong>{{ generatedConfig.totalPrice }}€</strong>
-              </div>
             </div>
             <div class="config-actions">
               <input type="text" [(ngModel)]="configName" placeholder="Naziv konfiguracije" class="config-name-input" />
@@ -95,7 +106,7 @@
         <div class="games-grid">
           @for (game of availableGames; track game) {
             <div class="game-item" [class.selected]="isGameSelected(game)" (click)="toggleGame(game)">
-              🎮 {{ game }}
+              {{ game }}
             </div>
           }
         </div>

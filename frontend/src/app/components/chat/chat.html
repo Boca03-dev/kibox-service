@@ -1,0 +1,36 @@
+<div class="chat-page">
+  <div class="chat-header">
+    <h1>Chat sa podrškom</h1>
+    <p>Direktna komunikacija sa KiBox timom</p>
+  </div>
+
+  <div class="chat-container">
+    <div class="chat-box">
+      <div class="chat-messages" #messagesContainer>
+        @if (messages.length === 0) {
+          <div class="chat-empty">
+            <i class="fa-regular fa-comments fa-5x"></i>
+            <p>Započnite razgovor sa našim timom!</p>
+          </div>
+        }
+        @for (message of messages; track message._id) {
+          <div class="message" [class.mine]="isMyMessage(message)" [class.theirs]="!isMyMessage(message)">
+            <div class="message-bubble">
+              <p>{{ message.content }}</p>
+              <span class="message-time">{{ message.createdAt | date:'HH:mm' }}</span>
+            </div>
+            <span class="message-sender">{{ isMyMessage(message) ? 'Vi' : 'KiBox Support' }}</span>
+          </div>
+        }
+      </div>
+
+      <div class="chat-input">
+        <input type="text" [(ngModel)]="newMessage" placeholder="Unesite poruku..."
+          (keyup.enter)="sendMessage()" />
+        <button (click)="sendMessage()" [disabled]="!newMessage.trim()">
+          Pošalji ➤
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

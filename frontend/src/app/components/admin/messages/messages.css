@@ -1,141 +1,203 @@
+/* --- OSNOVNI LAYOUT --- */
 .admin-page {
   display: flex;
   min-height: calc(100vh - 70px);
-}
-
-.btn-logout {
-  background: transparent;
-  border: 1px solid #1a2e4a;
-  color: #a0aec0;
-  padding: 0.7rem 1rem;
-  border-radius: 8px;
-  cursor: pointer;
-  font-size: 0.95rem;
-  transition: all 0.2s;
-  text-align: left;
-}
-
-.btn-logout:hover {
-  border-color: #e53e3e;
-  color: #e53e3e;
+  background: #f8fafc;
 }
 
 .admin-content {
   flex: 1;
-  padding: 2rem 3rem;
-  background: #f8fafc;
+  padding: 2.5rem;
 }
 
-.admin-content h1 {
-  font-size: 2rem;
+.header-section {
+  margin-bottom: 2.5rem;
+}
+
+.header-section h1 {
+  font-size: 2rem; /* Povećano za bolji autoritet sekcije */
   font-weight: 800;
   color: #0a1628;
-  margin-bottom: 2rem;
+  margin-bottom: 0.5rem;
+  letter-spacing: -0.5px;
 }
 
-.loading {
-  text-align: center;
+.header-section p {
   color: #718096;
-  padding: 2rem;
+  font-size: 1rem; /* Blago povećano */
 }
 
-.empty-state {
-  text-align: center;
-  padding: 4rem;
-  background: #ffffff;
-  border-radius: 16px;
-}
-
-.empty-state span {
-  font-size: 3rem;
-  display: block;
-  margin-bottom: 1rem;
-}
-
-.empty-state h3 {
-  color: #718096;
-}
-
-.messages-list {
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-}
-
+/* --- KARTICA PORUKE --- */
 .message-card {
   background: #ffffff;
-  border-radius: 12px;
-  padding: 1.5rem;
-  box-shadow: 0 4px 15px rgba(0,0,0,0.05);
-  border-left: 4px solid transparent;
-  transition: all 0.2s;
+  border-radius: 16px;
+  padding: 1.8rem; /* Povećan unutrašnji prostor */
+  box-shadow: 0 4px 15px rgba(0,0,0,0.03);
+  margin-bottom: 1.5rem;
+  border: 1px solid #edf2f7;
+  border-left: 5px solid #e2e8f0; /* Malo deblja ivica */
+  transition: all 0.2s ease;
 }
 
 .message-card.unread {
-  border-left-color: #00c8ff;
+  border-left-color: #00d1ff;
   background: #f0fdff;
+}
+
+.message-card:hover {
+  transform: translateX(8px); /* Malo jači hover efekat */
 }
 
 .message-header {
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
-  margin-bottom: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.title-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 8px;
+}
+
+.title-row i {
+  color: #00d1ff;
+  font-size: 1.4rem; /* Vidno veća glavna ikona */
 }
 
 .message-sender h3 {
-  font-size: 1rem;
+  font-size: 1.25rem; /* Krupnije ime pošiljaoca */
   font-weight: 700;
   color: #0a1628;
-  margin-bottom: 0.2rem;
 }
 
-.message-sender span {
-  font-size: 0.85rem;
-  color: #718096;
-  margin-right: 0.5rem;
+.contact-details {
+  display: flex;
+  gap: 20px;
+  font-size: 0.95rem; /* Čitljiviji kontakt podaci */
+  color: #64748b;
 }
 
+.contact-details span {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.contact-details i {
+  color: #00d1ff;
+  font-size: 1.15rem; /* Veće ikonice za email i telefon */
+}
+
+/* --- META PODACI (DESNA STRANA) --- */
 .message-meta {
+  text-align: right;
   display: flex;
   flex-direction: column;
   align-items: flex-end;
-  gap: 0.3rem;
+  gap: 8px;
 }
 
 .message-date {
-  font-size: 0.8rem;
-  color: #a0aec0;
+  font-size: 0.85rem;
+  color: #94a3b8;
+  font-weight: 500;
+}
+
+.message-date i {
+  margin-right: 5px;
+  font-size: 1rem;
 }
 
 .badge-unread {
-  background: #00c8ff;
-  color: #0a1628;
-  padding: 0.2rem 0.6rem;
-  border-radius: 20px;
-  font-size: 0.75rem;
+  background: #00d1ff;
+  color: #ffffff;
+  padding: 5px 14px;
+  border-radius: 10px;
+  font-size: 0.8rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* --- SADRŽAJ PORUKE --- */
+.message-content {
+  padding: 1.2rem 0;
+  border-top: 1px solid #f1f5f9;
+  margin-bottom: 1.2rem;
+}
+
+.message-content p {
+  color: #334155;
+  font-size: 1.05rem; /* Povećan font same poruke za lakše čitanje */
+  line-height: 1.7;
+}
+
+/* --- AKCIJE --- */
+.message-actions {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.btn-read-action {
+  background: #ffffff;
+  border: 2px solid #00d1ff; /* Malo deblji border */
+  color: #00d1ff;
+  padding: 10px 20px; /* Veće dugme */
+  border-radius: 10px;
+  font-size: 0.9rem;
   font-weight: 700;
-}
-
-.message-body {
-  color: #4a5568;
-  font-size: 0.95rem;
-  line-height: 1.6;
-  margin-bottom: 1rem;
-}
-
-.btn-read {
-  background: transparent;
-  border: 1px solid #00c8ff;
-  color: #00c8ff;
-  padding: 0.4rem 1rem;
-  border-radius: 6px;
-  font-size: 0.85rem;
   cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 10px;
   transition: all 0.2s;
 }
 
-.btn-read:hover {
-  background: #00c8ff;
-  color: #0a1628;
+.btn-read-action:hover {
+  background: #00d1ff;
+  color: white;
+  box-shadow: 0 4px 12px rgba(0, 209, 255, 0.2);
+}
+
+.btn-read-action i {
+  font-size: 1.1rem;
+}
+
+.read-status {
+  font-size: 0.95rem;
+  color: #94a3b8;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 600;
+}
+
+.read-status i {
+  font-size: 1.2rem;
+  color: #cbd5e1;
+}
+
+/* --- STATES --- */
+.loading {
+  text-align: center;
+  padding: 5rem;
+  color: #94a3b8;
+  font-size: 1.1rem;
+}
+
+.empty-state {
+  text-align: center;
+  padding: 6rem;
+  background: white;
+  border-radius: 24px;
+  color: #cbd5e0;
+}
+
+.empty-state i {
+  font-size: 4rem;
+  margin-bottom: 1.5rem;
 }
