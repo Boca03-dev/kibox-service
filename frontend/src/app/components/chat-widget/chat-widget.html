@@ -1,0 +1,51 @@
+@if (isLoggedIn && !isAdmin && hasChat) {
+  <div class="chat-widget">
+    @if (!isOpen) {
+      <button class="chat-toggle" (click)="toggleChat()">
+        <i class="fa-solid fa-comment-dots"></i>
+        @if (unreadCount > 0) {
+          <span class="chat-badge">{{ unreadCount }}</span>
+        }
+      </button>
+    }
+
+    @if (isOpen) {
+      <div class="chat-window">
+        <div class="chat-window-header">
+          <div class="header-info">
+            <div class="status-dot"></div>
+            <h3>KiBox Podrška</h3>
+          </div>
+          <button (click)="toggleChat()" class="btn-close">
+            <i class="fa-solid fa-xmark"></i>
+          </button>
+        </div>
+
+        <div class="chat-messages" #messagesContainer>
+          @if (messages.length === 0) {
+            <div class="chat-empty">
+              <i class="fa-solid fa-hand-wave"></i>
+              <p>Zdravo! Kako možemo da vam pomognemo danas?</p>
+            </div>
+          }
+          @for (message of messages; track message._id) {
+            <div class="message" [class.mine]="isMyMessage(message)" [class.theirs]="!isMyMessage(message)">
+              <div class="message-bubble">
+                <p>{{ message.content }}</p>
+                <span class="message-time">{{ message.createdAt | date:'HH:mm' }}</span>
+              </div>
+            </div>
+          }
+        </div>
+
+        <div class="chat-input-wrapper">
+          <input type="text" [(ngModel)]="newMessage" placeholder="Vaša poruka..."
+            (keyup.enter)="sendMessage()" />
+          <button (click)="sendMessage()" [disabled]="!newMessage.trim()" class="btn-send-small">
+            <i class="fa-solid fa-paper-plane"></i>
+          </button>
+        </div>
+      </div>
+    }
+  </div>
+}

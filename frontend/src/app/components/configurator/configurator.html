@@ -89,6 +89,9 @@
                   <span class="item-price">{{ item.price }}€</span>
                 </div>
               }
+              <div class="config-total">
+                Ukupno: <strong>{{ generatedConfig.totalPrice }}€</strong>
+              </div>
             </div>
             <div class="config-actions">
               <input type="text" [(ngModel)]="configName" placeholder="Naziv konfiguracije" class="config-name-input" />

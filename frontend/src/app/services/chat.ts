@@ -2,12 +2,14 @@ import { Injectable } from '@angular/core';
 import { ApiService } from './api';
 import { Observable } from 'rxjs';
 import { io, Socket } from 'socket.io-client';
+import { Subject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ChatService {
   private socket: Socket;
+  chatCreated$ = new Subject<void>();
 
   constructor(private api: ApiService) {
     this.socket = io('http://localhost:5000');
@@ -29,6 +31,10 @@ export class ChatService {
     return this.api.post('chats/message', { chatId, content }, true);
   }
 
+  hasExistingChat(): Observable<any> {
+    return this.api.get('chats/exists', true);
+  }
+
   joinChat(chatId: string): void {
     this.socket.emit('joinChat', chatId);
   }
@@ -43,6 +49,10 @@ export class ChatService {
         observer.next(data);
       });
     });
+  }
+
+  notifyChatCreated(): void {
+    this.chatCreated$.next();
   }
 
   disconnect(): void {

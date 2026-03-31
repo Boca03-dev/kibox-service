@@ -2,6 +2,7 @@ import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { MessageService } from '../../services/message';
 import { AuthService } from '../../services/auth';
+import { ChatService } from '../../services/chat';
 
 @Component({
   selector: 'app-contact',
@@ -19,7 +20,8 @@ export class Contact implements OnInit {
   constructor(
     private messageService: MessageService,
     private authService: AuthService,
-    private cdr: ChangeDetectorRef
+    private cdr: ChangeDetectorRef,
+    private chatService: ChatService
   ) {}
 
   ngOnInit(): void {
@@ -33,30 +35,39 @@ export class Contact implements OnInit {
   }
 
   onSubmit(): void {
-  this.errorMessage = '';
-  this.successMessage = '';
+    this.errorMessage = '';
+    this.successMessage = '';
 
-  if (this.form.phone && !/^(\+\d{9,15}|06\d{7,8})$/.test(this.form.phone)) {
-    this.errorMessage = 'Telefon mora počinjati sa + ili 06 i sadržati samo brojeve';
-    this.cdr.detectChanges();
-    return;
-  }
-
-  this.loading = true;
-  this.cdr.detectChanges();
-
-  this.messageService.sendMessage(this.form).subscribe({
-    next: () => {
-      this.loading = false;
-      this.successMessage = 'Poruka je uspešno poslata! Odgovorićemo vam uskoro.';
-      this.form = { name: '', email: '', phone: '', message: '' };
+    if (this.form.phone && !/^(\+\d{9,15}|06\d{7,8})$/.test(this.form.phone)) {
+      this.errorMessage = 'Telefon mora počinjati sa + ili 06 i sadržati samo brojeve';
       this.cdr.detectChanges();
-    },
-    error: (err) => {
-      this.loading = false;
-      this.errorMessage = err.error?.message || 'Greška pri slanju poruke';
-      this.cdr.detectChanges();
+      return;
     }
-  });
-}
+
+    this.loading = true;
+    this.cdr.detectChanges();
+
+    this.messageService.sendMessage(this.form).subscribe({
+      next: () => {
+        this.loading = false;
+        this.successMessage = 'Poruka je uspešno poslata! Odgovorićemo vam uskoro.';
+        this.form = { name: '', email: '', phone: '', message: '' };
+
+        if (this.authService.isLoggedIn() && !this.authService.isAdmin()) {
+          this.chatService.getMyChat().subscribe({
+            next: () => {
+              this.chatService.notifyChatCreated();
+            }
+          });
+        }
+
+        this.cdr.detectChanges();
+      },
+      error: (err) => {
+        this.loading = false;
+        this.errorMessage = err.error?.message || 'Greška pri slanju poruke';
+        this.cdr.detectChanges();
+      }
+    });
+  } 
 }

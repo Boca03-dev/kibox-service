@@ -201,3 +201,25 @@
   font-size: 4rem;
   margin-bottom: 1.5rem;
 }
+
+.message-actions {
+  display: flex;
+  gap: 0.8rem;
+  margin-top: 0.5rem;
+}
+
+.btn-chat {
+  background: transparent;
+  border: 1px solid #00c8ff;
+  color: #00c8ff;
+  padding: 0.4rem 1rem;
+  border-radius: 6px;
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.btn-chat:hover {
+  background: #00c8ff;
+  color: #0a1628;
+}

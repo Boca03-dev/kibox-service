@@ -1,41 +1,62 @@
 <div class="my-appointments-page">
   <div class="my-appointments-header">
     <h1>Moji termini</h1>
-    <p>Pregledajte status vaših zakazanih termina</p>
+    <p>Pratite status servisiranja Vaših uređaja u realnom vremenu</p>
   </div>
 
   <div class="my-appointments-container">
     @if (loading) {
-      <div class="loading">Učitavanje...</div>
+      <div class="loading-state">
+        <i class="fa-solid fa-circle-notch fa-spin"></i>
+        <p>Učitavanje Vaših termina...</p>
+      </div>
     }
 
     @if (!loading && appointments.length === 0) {
       <div class="empty-state">
-        <i class="fa-solid fa-calendar"></i>
+        <div class="empty-icon">
+          <i class="fa-solid fa-calendar-xmark"></i>
+        </div>
         <h3>Nemate zakazanih termina</h3>
-        <p>Zakažite termin za servisiranje vašeg uređaja!</p>
-        <a routerLink="/appointment" class="btn-primary">Zakaži termin</a>
+        <p>Potreban Vam je servis ili nadogradnja? Naš tim je spreman da pomogne.</p>
+        <a routerLink="/appointment" class="btn-primary">Zakažite odmah</a>
       </div>
     }
 
-    <div class="appointments-list">
+    <div class="appointments-grid">
       @for (appointment of appointments; track appointment._id) {
         <div class="appointment-card" [class]="'status-' + appointment.status">
-          <div class="appointment-header">
-            <div class="appointment-info">
-              <h3>{{ appointment.description }}</h3>
-              <span class="appointment-date"><i class="fa-solid fa-calendar"></i> {{ appointment.date | date:'dd.MM.yyyy HH:mm' }}</span>
-            </div>
-            <div class="appointment-meta">
-              <span class="badge" [class]="'badge-' + appointment.status">
-                <i [class]="getStatusIcon(appointment.status)" style="margin-right: 5px;"></i>
+          <div class="card-header">
+            <div class="status-wrapper">
+              <span class="status-badge" [class]="'badge-' + appointment.status">
+                <i [class]="getStatusIcon(appointment.status)"></i>
                 {{ getStatusLabel(appointment.status) }}
               </span>
             </div>
+            <div class="date-box">
+              <span class="day">{{ appointment.date | date:'dd' }}</span>
+              <span class="month">{{ appointment.date | date:'MMM' }}</span>
+            </div>
           </div>
-          <div class="appointment-details">
-            <span><i class="fa-solid fa-phone"></i> {{ appointment.phone }}</span>
-            <span><i class="fa-solid fa-envelope"></i> {{ appointment.email }}</span>
+
+          <div class="card-body">
+            <h3 class="description">{{ appointment.description }}</h3>
+            <div class="info-row">
+              <i class="fa-solid fa-clock"></i>
+              <span>Vreme: <strong>{{ appointment.date | date:'HH:mm' }}h</strong></span>
+            </div>
+            <div class="info-row">
+              <i class="fa-solid fa-phone"></i>
+              <span>Kontakt: {{ appointment.phone }}</span>
+            </div>
+          </div>
+
+          <div class="card-footer">
+             @if (appointment.status === 'pending') {
+               <p class="status-note"><i class="fa-solid fa-circle-info"></i> Očekujte poziv za potvrdu</p>
+             } @else if (appointment.status === 'confirmed') {
+               <p class="status-note success"><i class="fa-solid fa-circle-check"></i> Vidimo se u zakazano vreme!</p>
+             }
           </div>
         </div>
       }

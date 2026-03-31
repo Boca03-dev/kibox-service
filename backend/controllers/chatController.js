@@ -79,3 +79,12 @@ exports.sendMessage = async (req, res) => {
     res.status(500).json({ message: err.message });
   }
 };
+
+exports.checkChatExists = async (req, res) => {
+  try {
+    const chat = await Chat.findOne({ user: req.user.id });
+    res.json({ exists: !!chat, chatId: chat?._id });
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+};

@@ -8,6 +8,7 @@ const componentRoutes = require('./routes/componentRoutes');
 const configurationRoutes = require('./routes/configurationRoutes');
 const gameRoutes = require('./routes/gameRoutes');
 const chatRoutes = require('./routes/chatRoutes');
+const notificationRoutes = require('./routes/notificationRoutes');
 
 const app = express();
 
@@ -21,5 +22,6 @@ app.use('/api/components', componentRoutes);
 app.use('/api/configurations', configurationRoutes);
 app.use('/api/games', gameRoutes);
 app.use('/api/chats', chatRoutes);
+app.use('/api/notifications', notificationRoutes);
 
 module.exports = app;

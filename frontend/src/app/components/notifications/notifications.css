@@ -1,192 +1,217 @@
-.notifications-page {
-  min-height: calc(100vh - 70px);
-  background: #f8fafc;
+
+.notifications-page.admin-layout {
+  display: flex;
+  background: #f4f7fa;
 }
 
-.notifications-header {
-  background: linear-gradient(135deg, #0a1628 0%, #0d2144 100%);
-  padding: 4rem 2rem;
-  text-align: center;
+.notifications-main {
+  flex: 1;
+  min-height: 100vh;
 }
 
-.notifications-header h1 {
-  font-size: 2.5rem;
-  font-weight: 800;
-  color: #ffffff;
-  margin-bottom: 0.5rem;
-}
-
-.notifications-header p {
-  color: #a0aec0;
-  font-size: 1.1rem;
-}
-
-.notifications-container {
-  max-width: 800px;
-  margin: 3rem auto;
-  padding: 0 2rem;
-}
-
-.loading {
-  text-align: center;
-  color: #718096;
-  padding: 3rem;
-}
-
-.empty-state {
-  text-align: center;
-  padding: 4rem 2rem;
+.admin-layout .notifications-header {
   background: #ffffff;
-  border-radius: 16px;
-  box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+  padding: 1.5rem 3rem;
+  border-bottom: 1px solid #e2e8f0;
+  text-align: left;
 }
 
-.empty-state span {
-  font-size: 3rem;
-  display: block;
-  margin-bottom: 1rem;
-}
-
-.empty-state h3 {
-  font-size: 1.4rem;
+.admin-layout .notifications-header h1 {
   color: #0a1628;
-  margin-bottom: 0.5rem;
+  font-size: 1.5rem;
+  margin: 0;
 }
 
-.empty-state p {
+.admin-layout .notifications-header p {
   color: #718096;
+  font-size: 0.9rem;
+}
+
+.admin-layout .notifications-container {
+  max-width: 1000px;
+  margin: 2rem auto;
+  padding: 0 3rem;
 }
 
 .notifications-toolbar {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 1rem;
+  margin-bottom: 1.5rem;
 }
 
-.unread-count {
-  font-size: 0.9rem;
-  color: #718096;
-  font-weight: 600;
-}
-
-.btn-mark-all {
-  background: transparent;
-  border: 1px solid #00c8ff;
-  color: #00c8ff;
-  padding: 0.4rem 1rem;
-  border-radius: 6px;
-  font-size: 0.85rem;
-  cursor: pointer;
-  transition: all 0.2s;
-}
-
-.btn-mark-all:hover {
-  background: #00c8ff;
+.badge-unread {
+  background: #00d1ff;
   color: #0a1628;
-}
-
-.notifications-list {
-  display: flex;
-  flex-direction: column;
-  gap: 0.8rem;
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-weight: 800;
+  font-size: 0.8rem;
+  margin-right: 10px;
 }
 
 .notification-card {
   background: #ffffff;
   border-radius: 12px;
-  padding: 1.2rem 1.5rem;
-  box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+  margin-bottom: 8px;
+  padding: 1rem 1.5rem;
   display: flex;
   align-items: center;
-  gap: 1rem;
-  cursor: pointer;
+  gap: 1.5rem;
+  border: 1px solid transparent;
   transition: all 0.2s;
-  border-left: 4px solid transparent;
+  position: relative;
+  overflow: hidden;
 }
 
 .notification-card:hover {
+  border-color: #cbd5e0;
   transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(0,0,0,0.1);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
 }
 
 .notification-card.unread {
-  border-left-color: #00c8ff;
-  background: #f0fdff;
+  background: #ffffff;
+  border-left: 4px solid #00d1ff;
+}
+
+.type-indicator {
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 4px;
+  background: #e2e8f0;
+}
+
+.is-chat .type-indicator {
+  background: #00d1ff;
 }
 
 .notification-icon {
-  font-size: 1.8rem;
-  min-width: 40px;
-  text-align: center;
+  width: 45px;
+  height: 45px;
+  background: #f8fafc;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.2rem;
+  color: #64748b;
 }
 
-.notification-content {
+.is-chat .notification-icon {
+  color: #00d1ff;
+  background: rgba(0, 209, 255, 0.05);
+}
+
+.notification-body {
   flex: 1;
 }
 
-.notification-content h3 {
-  font-size: 1rem;
+.content-row {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 4px;
+}
+
+.notif-title {
   font-weight: 700;
-  color: #0a1628;
-  margin-bottom: 0.2rem;
+  color: #1e293b;
 }
 
-.notification-content p {
+.notif-time {
+  font-size: 0.75rem;
+  color: #94a3b8;
+}
+
+.notif-text {
   font-size: 0.9rem;
-  color: #4a5568;
-  margin-bottom: 0.3rem;
+  color: #475569;
+  margin: 0;
 }
 
-.notification-date {
-  font-size: 0.8rem;
-  color: #a0aec0;
+.btn-mini-delete {
+  background: none;
+  border: none;
+  color: #cbd5e0;
+  cursor: pointer;
+  padding: 8px;
+  border-radius: 6px;
+  transition: all 0.2s;
 }
 
-.unread-dot {
-  width: 10px;
-  height: 10px;
-  background: #00c8ff;
-  border-radius: 50%;
-  min-width: 10px;
+.btn-mini-delete:hover {
+  background: #fff5f5;
+  color: #ff4d4d;
+}
+
+.btn-action-outline {
+  background: white;
+  border: 1px solid #e2e8f0;
+  padding: 8px 16px;
+  border-radius: 8px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.btn-action-outline:hover {
+  border-color: #00d1ff;
+  color: #00d1ff;
 }
 
 .toolbar-actions {
   display: flex;
-  gap: 0.5rem;
+  gap: 12px;
+  align-items: center;
 }
 
-.btn-delete-all {
-  background: transparent;
-  border: 1px solid #e53e3e;
-  color: #e53e3e;
-  padding: 0.4rem 1rem;
-  border-radius: 6px;
+.btn-action-outline {
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  color: #4a5568;
+  padding: 8px 16px;
+  border-radius: 8px;
   font-size: 0.85rem;
+  font-weight: 600;
   cursor: pointer;
   transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  gap: 6px;
 }
 
-.btn-delete-all:hover {
-  background: #e53e3e;
-  color: #ffffff;
+.btn-action-outline:hover {
+  border-color: #00d1ff;
+  color: #00d1ff;
+  background: rgba(0, 209, 255, 0.02);
 }
 
-.btn-delete-single {
+.btn-action-danger {
   background: transparent;
-  border: none;
+  border: 1px solid transparent;
+  color: #a0aec0;
+  padding: 8px 16px;
+  border-radius: 8px;
+  font-size: 0.85rem;
+  font-weight: 600;
   cursor: pointer;
-  font-size: 1rem;
-  padding: 0.3rem;
-  border-radius: 6px;
-  opacity: 0;
   transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  gap: 6px;
 }
 
-.notification-card:hover .btn-delete-single {
-  opacity: 1;
+.btn-action-danger:hover {
+  color: #ff4d4d;
+  background: #fff5f5;
+  border-color: #ffdada;
 }
 
-i{
-  color: #3498db;
+.admin-layout .notifications-toolbar {
+  background: transparent;
+  box-shadow: none;
+  padding: 0;
+  margin-bottom: 2rem;
 }

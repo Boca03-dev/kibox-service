@@ -1,7 +1,6 @@
 <div class="chat-page">
   <div class="chat-header">
-    <h1>Chat sa podrškom</h1>
-    <p>Direktna komunikacija sa KiBox timom</p>
+    <h1>Podrška uživo</h1>
   </div>
 
   <div class="chat-container">
@@ -9,26 +8,35 @@
       <div class="chat-messages" #messagesContainer>
         @if (messages.length === 0) {
           <div class="chat-empty">
-            <i class="fa-regular fa-comments fa-5x"></i>
-            <p>Započnite razgovor sa našim timom!</p>
+            <i class="fa-solid fa-comments-dots"></i>
+            <h3>Započnite razgovor</h3>
+            <p>Tu smo da odgovorimo na sva vaša pitanja o komponentama i servisiranju.</p>
           </div>
         }
         @for (message of messages; track message._id) {
           <div class="message" [class.mine]="isMyMessage(message)" [class.theirs]="!isMyMessage(message)">
             <div class="message-bubble">
               <p>{{ message.content }}</p>
-              <span class="message-time">{{ message.createdAt | date:'HH:mm' }}</span>
+              <span class="message-time">
+                <i class="fa-regular fa-clock"></i> {{ message.createdAt | date:'HH:mm' }}
+              </span>
             </div>
-            <span class="message-sender">{{ isMyMessage(message) ? 'Vi' : 'KiBox Support' }}</span>
+            <span class="message-sender">
+              {{ isMyMessage(message) ? 'Vi' : 'KiBox Support' }}
+            </span>
           </div>
         }
       </div>
 
-      <div class="chat-input">
-        <input type="text" [(ngModel)]="newMessage" placeholder="Unesite poruku..."
-          (keyup.enter)="sendMessage()" />
-        <button (click)="sendMessage()" [disabled]="!newMessage.trim()">
-          Pošalji ➤
+      <div class="chat-input-area">
+        <div class="input-wrapper">
+          <i class="fa-regular fa-face-smile"></i>
+          <input type="text" [(ngModel)]="newMessage" placeholder="Napišite poruku..."
+            (keyup.enter)="sendMessage()" />
+        </div>
+        <button (click)="sendMessage()" [disabled]="!newMessage.trim()" class="btn-send">
+          <span>Pošalji</span>
+          <i class="fa-solid fa-paper-plane"></i>
         </button>
       </div>
     </div>

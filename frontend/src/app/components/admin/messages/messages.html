@@ -26,39 +26,25 @@
         <div class="message-card" [class.unread]="!message.read">
           <div class="message-header">
             <div class="message-sender">
-              <div class="title-row">
-                <i class="fa-solid fa-user-circle"></i>
-                <h3>{{ message.name }}</h3>
-              </div>
-              <div class="contact-details">
-                <span><i class="fa-regular fa-envelope"></i> {{ message.email }}</span>
-                @if (message.phone) {
-                  <span><i class="fa-solid fa-phone"></i> {{ message.phone }}</span>
-                }
-              </div>
+              <h3>{{ message.name }}</h3>
+              <span>{{ message.email }}</span>
+              @if (message.phone) {
+                <span>• {{ message.phone }}</span>
+              }
             </div>
             <div class="message-meta">
-              <span class="message-date">
-                <i class="fa-regular fa-clock"></i> {{ message.createdAt | date:'dd.MM.yyyy HH:mm' }}
-              </span>
+              <span class="message-date">{{ message.createdAt | date:'dd.MM.yyyy HH:mm' }}</span>
               @if (!message.read) {
-                <span class="badge-unread">Nova poruka</span>
+                <span class="badge-unread">Nova</span>
               }
             </div>
           </div>
-          
-          <div class="message-content">
-            <p>{{ message.message }}</p>
-          </div>
-
+          <p class="message-body">{{ message.message }}</p>
           <div class="message-actions">
             @if (!message.read) {
-              <button (click)="markAsRead(message)" class="btn-read-action">
-                <i class="fa-solid fa-check-double"></i> Označi kao pročitano
-              </button>
-            } @else {
-               <span class="read-status"><i class="fa-solid fa-check"></i> Pročitano</span>
+              <button (click)="markAsRead(message)" class="btn-read">✓ Označi kao pročitano</button>
             }
+            <button (click)="openChat(message.email)" class="btn-chat"><i class="fa-solid fa-comment"></i> Otvori chat</button>
           </div>
         </div>
       }

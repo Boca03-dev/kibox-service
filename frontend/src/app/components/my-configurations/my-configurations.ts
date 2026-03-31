@@ -68,11 +68,17 @@ export class MyConfigurations implements OnInit {
 
   toggleCompare(id: string): void {
     const idx = this.selectedForCompare.indexOf(id);
+    
     if (idx > -1) {
       this.selectedForCompare.splice(idx, 1);
-    } else if (this.selectedForCompare.length < 2) {
-      this.selectedForCompare.push(id);
+    } else {
+      if (this.selectedForCompare.length < 2) {
+        this.selectedForCompare.push(id);
+      } else {
+        this.selectedForCompare[1] = id;
+      }
     }
+    this.cdr.detectChanges();
   }
 
   isSelectedForCompare(id: string): boolean {

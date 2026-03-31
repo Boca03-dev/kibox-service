@@ -2,6 +2,7 @@ import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
 import { DatePipe } from '@angular/common';
 import { NotificationService } from '../../services/notification';
+import { AuthService } from '../../services/auth';
 import { AdminSidebar } from '../admin/admin-sidebar/admin-sidebar';
 
 @Component({
@@ -14,13 +15,19 @@ import { AdminSidebar } from '../admin/admin-sidebar/admin-sidebar';
 export class Notifications implements OnInit {
   notifications: any[] = [];
   loading = true;
+  isAdmin = false;
 
   get unreadCount(): number {
     return this.notifications.filter(n => !n.read).length;
   }
 
+  get readCount(): number {
+    return this.notifications.filter(n => n.read).length;
+  }
+
   constructor(
     private notificationService: NotificationService,
+    private authService: AuthService,
     private router: Router,
     private cdr: ChangeDetectorRef
   ) {}
@@ -38,17 +45,11 @@ export class Notifications implements OnInit {
           this.cdr.detectChanges();
         }
       });
-    }, 0);
-  }
 
-  getIcon(type: string): string {
-    const icons: any = {
-      message: '✉️',
-      appointment: '📅',
-      configuration: '⚙️',
-      appointment_status: '🔔'
-    };
-    return icons[type] || '🔔';
+      this.authService.currentUser$.subscribe(user => {
+        this.isAdmin = user?.role === 'admin';
+      });
+    }, 0);
   }
 
   onNotificationClick(notification: any): void {
@@ -72,10 +73,6 @@ export class Notifications implements OnInit {
         this.cdr.detectChanges();
       }
     });
-  }
-
-  get readCount(): number {
-    return this.notifications.filter(n => n.read).length;
   }
 
   deleteOne(event: Event, id: string): void {

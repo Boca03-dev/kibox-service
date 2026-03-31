@@ -1,132 +1,149 @@
 .navbar {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 0 2rem;
-  height: 70px;
-  background: #0a1628;
-  box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+  height: 75px;
+  background: rgba(10, 22, 40, 0.95);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
   position: sticky;
   top: 0;
   z-index: 1000;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  display: flex;
+  align-items: center;
+}
+
+.navbar-container {
+  max-width: 1300px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 0 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .navbar-brand a {
   text-decoration: none;
   display: flex;
-  align-items: baseline;
-  gap: 4px;
+  flex-direction: column;
+  line-height: 1;
 }
 
 .brand-name {
-  font-size: 1.5rem;
-  font-weight: 800;
+  font-size: 1.6rem;
+  font-weight: 900;
   color: #ffffff;
+  letter-spacing: -1px;
 }
 
 .brand-sub {
-  font-size: 0.9rem;
+  font-size: 0.7rem;
   color: #00c8ff;
-  font-weight: 500;
-  letter-spacing: 2px;
+  font-weight: 600;
+  letter-spacing: 3px;
   text-transform: uppercase;
+  margin-top: 2px;
 }
 
 .navbar-links {
   display: flex;
-  gap: 1.5rem;
+  gap: 2rem;
 }
 
 .navbar-links a {
   text-decoration: none;
-  color: #a0aec0;
+  color: #cbd5e0;
   font-size: 0.95rem;
   font-weight: 500;
-  transition: color 0.2s;
+  transition: all 0.3s ease;
+  position: relative;
+  padding: 0.5rem 0;
 }
 
-.navbar-links a:hover,
-.navbar-links a.active {
+.navbar-links a:hover {
   color: #00c8ff;
 }
 
+.navbar-links a::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background: #00c8ff;
+  transition: width 0.3s ease;
+  box-shadow: 0 0 10px rgba(0, 200, 255, 0.5);
+}
+
+.navbar-links a.active {
+  color: #ffffff;
+}
+
+.navbar-links a.active::after {
+  width: 100%;
+}
+
 .navbar-auth {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.btn-login {
+  text-decoration: none;
+  color: #ffffff;
+  font-size: 0.9rem;
+  font-weight: 500;
+  transition: opacity 0.2s;
+}
+
+.btn-login:hover {
+  opacity: 0.8;
+}
+
+.btn-register {
+  text-decoration: none;
+  background: linear-gradient(135deg, #00c8ff 0%, #0088ff 100%);
+  color: #0a1628;
+  padding: 0.6rem 1.4rem;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  font-weight: 700;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.btn-register:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(0, 200, 255, 0.3);
+}
+
+.user-info {
   display: flex;
   align-items: center;
   gap: 1rem;
 }
 
 .user-name {
-  color: #a0aec0;
-  font-size: 0.95rem;
-}
-
-.btn-login {
-  text-decoration: none;
-  color: #a0aec0;
-  font-size: 0.95rem;
-  font-weight: 500;
-  transition: color 0.2s;
-}
-
-.btn-login:hover {
-  color: #00c8ff;
-}
-
-.btn-register {
-  text-decoration: none;
-  background: #00c8ff;
-  color: #0a1628;
-  padding: 0.4rem 1rem;
-  border-radius: 6px;
-  font-size: 0.95rem;
-  font-weight: 600;
-  transition: background 0.2s;
-}
-
-.btn-register:hover {
-  background: #00a8d8;
+  color: #cbd5e0;
+  font-size: 0.9rem;
+  border-right: 1px solid rgba(255, 255, 255, 0.1);
+  padding-right: 1rem;
 }
 
 .btn-logout {
   background: transparent;
-  border: 1px solid #a0aec0;
-  color: #a0aec0;
-  padding: 0.4rem 1rem;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: #ffffff;
+  padding: 0.4rem 0.8rem;
   border-radius: 6px;
-  font-size: 0.95rem;
   cursor: pointer;
+  font-size: 0.85rem;
   transition: all 0.2s;
 }
 
 .btn-logout:hover {
-  border-color: #00c8ff;
-  color: #00c8ff;
+  background: rgba(255, 255, 255, 0.05);
+  border-color: #fc8181;
+  color: #fc8181;
 }
 
-.nav-badge-link {
-  position: relative;
-  display: inline-flex;
-  align-items: center;
-  gap: 0.3rem;
-}
-
-.nav-badge {
-  background: #e53e3e;
-  color: #ffffff;
-  font-size: 0.7rem;
-  font-weight: 700;
-  padding: 0.1rem 0.4rem;
-  border-radius: 20px;
-  min-width: 18px;
-  text-align: center;
-}
-
-.nav-badge-dot {
-  width: 8px;
-  height: 8px;
-  background: #e53e3e;
-  border-radius: 50%;
-  display: inline-block;
-  margin-bottom: 8px;
-}
