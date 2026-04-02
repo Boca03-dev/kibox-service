@@ -1,146 +1,247 @@
 # KiBox Service
 
-Web aplikacija za servisiranje i konfiguraciju računara.
+> Web aplikacija za servisiranje i konfiguraciju računara
+
+---
+
+## Sadržaj
+
+- [O projektu](#o-projektu)
+- [Tehnologije](#tehnologije)
+- [Arhitektura projekta](#arhitektura-projekta)
+- [Funkcionalnosti](#funkcionalnosti)
+- [Pokretanje projekta](#pokretanje-projekta)
+- [API dokumentacija](#api-dokumentacija)
+- [Testiranje](#testiranje)
+- [Autor](#autor)
+
+---
 
 ## O projektu
 
-KiBox Service je full-stack web aplikacija koja omogućava korisnicima da zakazuju termine za servisiranje računara, kontaktiraju servis, kao i da konfigurišu PC prema svom budžetu ili željenim igricama.
+KiBox Service je full-stack web aplikacija namenjena servisu i konfiguraciji računara. Korisnicima omogućava da zakažu termin za servis, kontaktiraju tim i generišu optimalnu PC konfiguraciju prema budžetu ili željenim igricama. Admin panel pruža pregled svih zahteva, poruka i konfiguracija sa mogućnošću upravljanja terminima.
+
+---
 
 ## Tehnologije
 
-| Sloj | Tehnologija |
-|---|---|
-| Frontend | Angular 19 |
-| Backend | Node.js + Express |
-| Baza podataka | MongoDB Atlas (Mongoose) |
-| Autentifikacija | JWT |
-| Testiranje | Jest + Supertest |
+| Sloj | Tehnologija | Verzija |
+|---|---|---|
+| Frontend | Angular | 19 |
+| Backend | Node.js + Express | 18+ |
+| Baza podataka | MongoDB Atlas (Mongoose) | — |
+| Autentifikacija | JWT (JSON Web Token) | — |
+| Testiranje | Jest + Supertest | — |
 
-## Arhitektura
+---
+
+## Arhitektura projekta
+
 ```
 kibox-service/
 ├── backend/
-│   ├── config/          # Seed skripte
-│   ├── controllers/     # Poslovna logika
-│   ├── middleware/      # Auth middleware
-│   ├── models/          # MongoDB šeme
-│   ├── routes/          # API rute
-│   ├── tests/           # Jest testovi
-│   ├── app.js           # Express aplikacija
-│   └── server.js        # Pokretanje servera
+│   ├── config/               # Seed skripte za inicijalnu bazu
+│   ├── controllers/          # Poslovna logika (appointmentController, authController...)
+│   ├── middleware/           # JWT autentifikacija (authMiddleware)
+│   ├── models/               # Mongoose šeme (User, Appointment, Message...)
+│   ├── routes/               # Express rute
+│   ├── tests/                # Jest + Supertest testovi
+│   ├── app.js                # Express aplikacija i middleware
+│   └── server.js             # Pokretanje servera
 └── frontend/
     └── src/app/
-        ├── components/  # Angular komponente
-        ├── guards/      # Route guards
-        └── services/    # HTTP servisi
+        ├── components/       # Angular komponente (stranice i UI elementi)
+        ├── guards/           # Route guards (auth zaštita ruta)
+        └── services/         # HTTP servisi za komunikaciju sa API-jem
 ```
+
+---
 
 ## Funkcionalnosti
 
-### Javni deo
+### Javni deo (bez prijave)
 - Prikaz informacija o servisu
 - Zakazivanje termina za servis
 - Kontakt forma
 
 ### Korisnički nalog
-- Registracija i prijava
-- PC Konfigurator (ručni odabir, po budžetu, po igricama)
-- Čuvanje i poređenje konfiguracija
+- Registracija i prijava (JWT autentifikacija)
+- PC Konfigurator — ručni odabir, generisanje po budžetu ili po igricama
+- Čuvanje, pregled i slanje konfiguracija adminu
 
 ### Admin panel
-- Pregled poruka
-- Upravljanje terminima (potvrda/otkazivanje)
+- Pregled i upravljanje kontakt porukama
+- Potvrda ili otkazivanje termina sa automatskim obaveštenjima korisnicima
 - Pregled zahteva za konfiguracije
+
+---
 
 ## Pokretanje projekta
 
 ### Preduslovi
-- Node.js (v18+)
-- Angular CLI (`npm install -g @angular/cli`)
 
-### Backend
+- [Node.js](https://nodejs.org/) v18+
+- Angular CLI: `npm install -g @angular/cli`
+- MongoDB Atlas nalog sa aktivnom bazom
+
+### 1. Backend
+
 ```bash
 cd backend
 npm install
 ```
 
-Kreiraj `.env` fajl u `backend` folderu:
-```
+Kreiraj `.env` fajl u `backend/` folderu:
+
+```env
 MONGO_URI=tvoj_mongodb_atlas_connection_string
 PORT=5000
-JWT_SECRET=tvoj_secret_key
+JWT_SECRET=tvoj_tajni_kljuc
 ```
+
 ```bash
 npm run dev
 ```
 
-Backend radi na `http://localhost:5000`
+Backend je dostupan na `http://localhost:5000`
 
-### Frontend
+### 2. Frontend
+
 ```bash
 cd frontend
 npm install
 ng serve
 ```
 
-Frontend radi na `http://localhost:4200`
+Frontend je dostupan na `http://localhost:4200`
 
-### Testovi
-```bash
-cd backend
-npm test
-```
+### 3. Seed (popunjavanje baze igricama i komponentama)
 
-### Seed (igrice u bazu)
 ```bash
 cd backend
 node config/seed.js
 ```
 
-## API Endpoints
+---
+
+## API dokumentacija
+
+Svi zaštićeni endpointi zahtevaju `Authorization: Bearer <token>` header.
 
 ### Auth
-| Method | Endpoint | Opis |
-|---|---|---|
-| POST | /api/auth/register | Registracija |
-| POST | /api/auth/login | Prijava |
+
+| Metoda | Endpoint | Opis | Zaštita |
+|---|---|---|---|
+| POST | `/api/auth/register` | Registracija novog korisnika | — |
+| POST | `/api/auth/login` | Prijava, vraća JWT token | — |
 
 ### Termini
-| Method | Endpoint | Opis |
-|---|---|---|
-| POST | /api/appointments | Zakazivanje termina |
-| GET | /api/appointments | Svi termini (admin) |
-| PUT | /api/appointments/:id | Ažuriranje statusa (admin) |
+
+| Metoda | Endpoint | Opis | Zaštita |
+|---|---|---|---|
+| POST | `/api/appointments` | Zakazivanje termina | — |
+| GET | `/api/appointments` | Svi termini | Admin |
+| GET | `/api/appointments/my` | Termini ulogovanog korisnika | Korisnik |
+| PUT | `/api/appointments/:id` | Ažuriranje statusa (confirmed/cancelled) | Admin |
+| PUT | `/api/appointments/seen` | Označi termine kao viđene | Korisnik |
 
 ### Poruke
-| Method | Endpoint | Opis |
-|---|---|---|
-| POST | /api/messages | Slanje poruke |
-| GET | /api/messages | Sve poruke (admin) |
-| PUT | /api/messages/:id/read | Označi kao pročitano (admin) |
+
+| Metoda | Endpoint | Opis | Zaštita |
+|---|---|---|---|
+| POST | `/api/messages` | Slanje kontakt poruke | — |
+| GET | `/api/messages` | Sve poruke | Admin |
+| PUT | `/api/messages/:id/read` | Označi kao pročitano | Admin |
 
 ### Komponente
-| Method | Endpoint | Opis |
-|---|---|---|
-| GET | /api/components | Sve komponente |
-| POST | /api/components | Dodavanje (admin) |
-| DELETE | /api/components/:id | Brisanje (admin) |
+
+| Metoda | Endpoint | Opis | Zaštita |
+|---|---|---|---|
+| GET | `/api/components` | Sve komponente | — |
+| GET | `/api/components?type=cpu` | Filtriranje po tipu | — |
+| POST | `/api/components` | Dodavanje komponente | Admin |
+| DELETE | `/api/components/:id` | Brisanje komponente | Admin |
 
 ### Konfiguracije
-| Method | Endpoint | Opis |
-|---|---|---|
-| POST | /api/configurations | Kreiranje |
-| GET | /api/configurations/my | Moje konfiguracije |
-| POST | /api/configurations/generate | Generisanje |
-| GET | /api/configurations/all | Sve (admin) |
-| DELETE | /api/configurations/:id | Brisanje |
+
+| Metoda | Endpoint | Opis | Zaštita |
+|---|---|---|---|
+| POST | `/api/configurations/generate` | Generisanje konfiguracije po budžetu | — |
+| POST | `/api/configurations` | Čuvanje konfiguracije | Korisnik |
+| GET | `/api/configurations/my` | Moje konfiguracije | Korisnik |
+| PUT | `/api/configurations/:id/send` | Slanje konfiguracije adminu | Korisnik |
+| DELETE | `/api/configurations/:id` | Brisanje konfiguracije | Korisnik |
+| GET | `/api/configurations/all` | Sve konfiguracije | Admin |
 
 ### Igrice
-| Method | Endpoint | Opis |
-|---|---|---|
-| GET | /api/games | Sve igrice |
+
+| Metoda | Endpoint | Opis | Zaštita |
+|---|---|---|---|
+| GET | `/api/games` | Sve igrice sa zahtevima | — |
+| POST | `/api/games` | Dodavanje igrice | Admin |
+| DELETE | `/api/games/:id` | Brisanje igrice | Admin |
+
+### Chat
+
+| Metoda | Endpoint | Opis | Zaštita |
+|---|---|---|---|
+| GET | `/api/chats/my` | Chat ulogovanog korisnika | Korisnik |
+| GET | `/api/chats/exists` | Provjera da li chat postoji | Korisnik |
+| POST | `/api/chats/message` | Slanje poruke u chat | Korisnik |
+| GET | `/api/chats` | Svi chatovi | Admin |
+| GET | `/api/chats/:id` | Jedan chat po ID-u | Admin |
+
+### Notifikacije
+
+| Metoda | Endpoint | Opis | Zaštita |
+|---|---|---|---|
+| GET | `/api/notifications` | Notifikacije korisnika | Korisnik |
+| PUT | `/api/notifications/read-all` | Označi sve kao pročitane | Korisnik |
+| PUT | `/api/notifications/:id/read` | Označi jednu kao pročitanu | Korisnik |
+| DELETE | `/api/notifications/read-all` | Obriši sve pročitane | Korisnik |
+| DELETE | `/api/notifications/:id` | Obriši notifikaciju | Korisnik |
+
+---
+
+## Testiranje
+
+Testovi pokrivaju sve API endpointe koristeći Jest i Supertest uz stvarnu MongoDB test bazu.
+
+```bash
+cd backend
+npm test
+```
+
+Za pokretanje sa izveštajem pokrivenosti:
+
+```bash
+npm test -- --coverage
+```
+
+### Trenutna pokrivenost
+
+| Kategorija | Pokrivenost |
+|---|---|
+| Statements | ~84% |
+| Branches | ~72% |
+| Functions | ~81% |
+| Lines | ~86% |
+
+Testovi su organizovani po modulima u `backend/tests/`:
+
+- `auth.test.js` — registracija, prijava, JWT middleware
+- `appointments.test.js` — zakazivanje, status, korisnički pregled
+- `messages.test.js` — kontakt forma, admin pregled
+- `components.test.js` — CRUD komponenti
+- `configurations.test.js` — generisanje, čuvanje, admin pregled
+- `games.test.js` — igrice i zahtevi
+- `chat.test.js` — chat sistem
+- `notifications.test.js` — notifikacije korisnika
+
+---
 
 ## Autor
 
-Bogdan Bogićević, 28/2022
-Institut za matematiku i informatiku, Kragujevac
+**Bogdan Bogićević**  
+Indeks: 28/2022  
+Institut za matematiku i informatiku, Univerzitet u Kragujevcu

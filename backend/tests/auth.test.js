@@ -31,7 +31,7 @@ describe('Auth API', () => {
     token = res.body.token;
   });
 
-  test('POST /api/auth/register - dupli email', async () => {
+  test('POST /api/auth/register - dupli email vraca 400', async () => {
     const res = await request(app)
       .post('/api/auth/register')
       .send(testUser);
@@ -49,7 +49,7 @@ describe('Auth API', () => {
     expect(res.body).toHaveProperty('token');
   });
 
-  test('POST /api/auth/login - pogrešna lozinka', async () => {
+  test('POST /api/auth/login - pogrešna lozinka vraca 400', async () => {
     const res = await request(app)
       .post('/api/auth/login')
       .send({ email: testUser.email, password: 'pogresna' });
@@ -58,11 +58,42 @@ describe('Auth API', () => {
     expect(res.body.message).toBe('Pogrešan email ili lozinka');
   });
 
-  test('POST /api/auth/login - nepostojeci email', async () => {
+  test('POST /api/auth/login - nepostojeci email vraca 400', async () => {
     const res = await request(app)
       .post('/api/auth/login')
       .send({ email: 'nepostoji@test.com', password: '123456' });
 
     expect(res.statusCode).toBe(400);
+  });
+
+  test('Auth middleware - zahtev bez Authorization headera vraca 401', async () => {
+    const res = await request(app)
+      .get('/api/appointments');
+
+    expect(res.statusCode).toBe(401);
+  });
+
+  test('Auth middleware - malformiran token vraca 401', async () => {
+    const res = await request(app)
+      .get('/api/appointments')
+      .set('Authorization', 'Bearer ovonijevalidantoken123');
+
+    expect(res.statusCode).toBe(401);
+  });
+
+  test('Auth middleware - token bez Bearer prefiksa vraca 401', async () => {
+    const res = await request(app)
+      .get('/api/appointments')
+      .set('Authorization', token);
+
+    expect(res.statusCode).toBe(401);
+  });
+
+  test('Auth middleware - validan token prolazi', async () => {
+    const res = await request(app)
+      .get('/api/configurations/my')
+      .set('Authorization', `Bearer ${token}`);
+
+    expect(res.statusCode).toBe(200);
   });
 });
